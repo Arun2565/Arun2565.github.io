@@ -6,16 +6,16 @@
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 
-title: **Arun's Blog**
+title: "Arun's Blog"
 description:  
-Welcome to my personal tech blog! Here, I share insightful articles, tutorials, and personal experiences on ML and Data Science.
+"Welcome to my personal tech blog! Here, I share insightful articles, tutorials, and personal experiences on ML and Data Science."
 
 # Email and twitter are optional:
-email:arunvarma25683@gmail.com
-twitter_username:ArunVarma479327
+email: arunvarma25683@gmail.com
+twitter_username: ArunVarma479327
 
 # Set this to true to get LaTeX math equation support
-use_math:
+use_math: true
 
 # Add your Google Analytics ID here if you have one and want to use it
 google_analytics:
