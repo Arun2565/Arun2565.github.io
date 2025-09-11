@@ -7,12 +7,15 @@
 # https://learnxinyminutes.com/docs/yaml/
 
 title: Edit _config.yml to set your title!
-description: This is where the description of your site will go. You should change it by editing the _config.yml file. It can be as long as you like! Happy blogging... ❤
-github_username: jph00
+description: **Title:**  
+Arun Varma’s Tech Blog
+
+**Description:**  
+Welcome to my personal tech blog! Here, I share insightful articles, tutorials, and personal experiences on ML and Data Science.
 
 # Email and twitter are optional:
-email:
-twitter_username:
+email:arunvarma25683@gmail.com
+twitter_username:ArunVarma479327
 
 # Set this to true to get LaTeX math equation support
 use_math:
