@@ -7,8 +7,7 @@
 # https://learnxinyminutes.com/docs/yaml/
 
 title: "Arun's Blog"
-description:  
-"Welcome to my personal tech blog! Here, I share insightful articles, tutorials, and personal experiences on ML and Data Science."
+description: "Welcome to my personal tech blog! Here, I share insightful articles, tutorials, and personal experiences on ML and Data Science."
 
 # Email and twitter are optional:
 email: arunvarma25683@gmail.com
