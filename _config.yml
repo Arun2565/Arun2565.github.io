@@ -6,11 +6,8 @@
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 
-title: Edit _config.yml to set your title!
-description: **Title:**  
-Arun Varma’s Tech Blog
-
-**Description:**  
+title: **Arun's Blog**
+description:  
 Welcome to my personal tech blog! Here, I share insightful articles, tutorials, and personal experiences on ML and Data Science.
 
 # Email and twitter are optional:
