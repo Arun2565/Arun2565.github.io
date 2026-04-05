@@ -1,3 +1,4 @@
-# Arun's Blog
-
-This is my blog.
+---
+layout: none
+permalink: /
+---
