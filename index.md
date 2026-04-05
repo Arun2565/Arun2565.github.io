@@ -1,4 +1,4 @@
 ---
-layout: none
-permalink: /
+layout: default
 ---
+# Arun's Blog
