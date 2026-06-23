@@ -297,6 +297,7 @@
     .post-tag.essay { color: var(--tag-essay); }
     .post-tag.guide { color: var(--tag-guide); }
     .post-tag.note  { color: var(--tag-note); }
+    .post-tag.daily { color: var(--tag-note); }
 
     .post-date {
       font-family: 'DM Mono', monospace;
@@ -680,7 +681,8 @@
   </header>
 
   <nav>
-    <a href="/" {% if page.url == '/' %}class="active"{% endif %}>blog</a>
+    <a href="/writing/" {% if page.url == '/writing/' %}class="active"{% endif %}>writing</a>
+    <a href="/" {% if page.url == '/' %}class="active"{% endif %}>daily learnings</a>
     <a href="/#projects">projects</a>
     <a href="https://github.com/Arun2565" target="_blank">github <span class="ext">↗</span></a>
     <a href="https://x.com/ArunVarma479327" target="_blank">twitter <span class="ext">↗</span></a>

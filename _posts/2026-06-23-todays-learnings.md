@@ -2,7 +2,7 @@
 layout: post
 title: "Today's learnings"
 date: 2026-06-23
-category: note
+category: daily
 tags: [research, reasoning, productivity]
 ---
 
