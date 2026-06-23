@@ -16,19 +16,24 @@ layout: default
     {{ content }}
   </div>
 
-  {% assign citekey = site.author | slugify | append: "-" | append: page.date | date: "%Y-%m-%d" | append: "-" | append: page.title | slugify %}
+  {% assign date_str = page.date | date: "%Y-%m-%d" %}
+  {% assign year_str = page.date | date: "%Y" %}
+  {% assign month_str = page.date | date: "%m" %}
+  {% assign day_str = page.date | date: "%d" %}
+  {% assign citekey = site.author | slugify | append: "-" | append: date_str | append: "-" | append: page.title | slugify %}
+  {% capture bibtex %}@article{ {{ citekey }},
+    author = { {{ site.author }} },
+    title = { {{ page.title }} },
+    year = { {{ year_str }} },
+    month = { {{ month_str }} },
+    day = { {{ day_str }} },
+    howpublished = {\url{ {{ site.url }} }},
+    journal = { {{ site.title }} },
+    url = { {{ site.url }}{{ page.url }} }
+}{% endcapture %}
   <div class="citation">
     <div class="citation-label">Cite this post</div>
-    <pre class="citation-bibtex">@article{&#123;{ citekey }},
-    author = {&#123;&#123; site.author }},
-    title = {&#123;&#123; page.title }},
-    year = {&#123;&#123; page.date | date: "%Y" }},
-    month = {&#123;&#123; page.date | date: "%m" }},
-    day = {&#123;&#123; page.date | date: "%d" }},
-    howpublished = {\url{&#123;&#123; site.url }}},
-    journal = {&#123;&#123; site.title }},
-    url = {&#123;&#123; site.url }}{&#123; page.url }}
-}</pre>
+    <pre class="citation-bibtex">{{ bibtex }}</pre>
   </div>
 
   <a href="/" class="back-link">← back to blog</a>
