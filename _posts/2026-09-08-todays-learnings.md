@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Today's learnings"
+title: "Today's learnings September 8 2026"
 date: 2026-09-08
 category: daily
 tags: [reading, agents, coding, distribution, small-models]
