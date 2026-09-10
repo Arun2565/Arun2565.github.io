@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Underlyne · Arun Varma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Spectral:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"] {
+  --bg: #0f0f0d;
+  --bg2: #161613;
+  --bg3: #1c1c18;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.14);
+  --text: #d4cfc4;
+  --text2: #7a7770;
+  --text3: #3f3e3c;
+  --accent: #b8a96a;
+  --accent2: #c97b5a;
+  --glow: rgba(184,169,106,0.05);
+}
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --bg2: #f0ede6;
+  --bg3: #e8e4db;
+  --border: rgba(0,0,0,0.07);
+  --border2: rgba(0,0,0,0.14);
+  --text: #000000;
+  --text2: #333333;
+  --text3: #555555;
+  --accent: #8a6820;
+  --accent2: #b8502e;
+  --glow: rgba(138,104,32,0.06);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Spectral', Georgia, serif;
+  font-weight: 400;
+  min-height: 100vh;
+  transition: background 0.35s ease, color 0.35s ease;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+.wrap { max-width: 680px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+
+header {
+  padding: 60px 0 36px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+.brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transition: color 0.3s;
+}
+.brand-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: var(--text2);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-top: 7px;
+}
+.brand-sub em { font-style: normal; color: var(--accent2); }
+.toggle-btn {
+  background: none;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 7px 13px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.25s;
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
+.toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+nav {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  margin-bottom: 48px;
+  padding: 1px 0;
+}
+nav a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text2);
+  text-decoration: none;
+  padding: 10px 16px 10px 0;
+  transition: color 0.2s;
+}
+nav a:not(:first-child) { padding-left: 16px; border-left: 1px solid var(--border); }
+nav a:hover, nav a.active { color: var(--text); }
+nav .ext { font-size: 0.5rem; vertical-align: super; margin-left: 2px; opacity: 0.5; }
+
+.proj-header {
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+.proj-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.proj-subtitle {
+  font-family: 'Spectral', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.proj-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+.stack-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text3);
+  border: 1px solid var(--border2);
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+.article-section { margin-bottom: 28px; }
+.article-section-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.article-section-body {
+  font-family: 'Spectral', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text2);
+  line-height: 1.8;
+}
+.article-section-body p { margin-bottom: 14px; }
+.article-section-body p:last-child { margin-bottom: 0; }
+
+.lesson-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px 20px;
+  margin-top: 14px;
+}
+.lesson-box-body {
+  font-family: 'Spectral', serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text2);
+  line-height: 1.75;
+}
+
+.failure-list { list-style: none; margin: 0; padding: 0; }
+.failure-list li {
+  font-family: 'Spectral', serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text2);
+  line-height: 1.7;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  padding-left: 20px;
+  position: relative;
+}
+.failure-list li::before {
+  content: '✗';
+  position: absolute;
+  left: 0;
+  color: var(--accent2);
+  font-size: 0.8rem;
+}
+.failure-list li:last-child { border-bottom: none; }
+
+.proj-link-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s;
+  background: var(--text);
+  color: var(--bg);
+  margin-top: 8px;
+}
+.proj-link-github:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.back-link {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  text-decoration: none;
+  margin-bottom: 20px;
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s;
+}
+.back-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 52px;
+}
+.foot-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+}
+.foot-links { display: flex; gap: 18px; }
+.foot-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.foot-links a:hover { color: var(--accent); }
+
+@media (max-width: 520px) {
+  .wrap { padding: 0 18px; }
+  header { padding: 40px 0 28px; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .brand-name { font-size: 2.4rem; }
+  .proj-title { font-size: 1.6rem; }
+  footer { flex-direction: column; gap: 12px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <a href="index.html" style="text-decoration:none">
+      <div class="brand-name">Arun.</div>
+      <div class="brand-sub">ml engineer &amp;&amp; <em>data science student</em></div>
+    </a>
+  </div>
+  <button class="toggle-btn" id="theme-btn" onclick="toggleTheme()">☾ dark</button>
+</header>
+
+<nav>
+  <a href="index.html">about</a>
+  <a href="projects.html" class="active">projects</a>
+  <a href="writing.html">writing</a>
+  <a href="daily.html">daily</a>
+  <a href="index.html#skills">skills</a>
+  <a href="https://github.com/Arun2565" target="_blank">github <span class="ext">↗</span></a>
+  <a href="https://x.com/ArunVarma479327" target="_blank">twitter <span class="ext">↗</span></a>
+  <a href="https://arunvarma1.substack.com" target="_blank">
+    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:1px"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="7" x2="17" y2="7"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="7" y1="17" x2="13" y2="17"/></svg>
+    substack <span class="ext">↗</span>
+  </a>
+  <a href="mailto:arunvarma25683@gmail.com">email <span class="ext">↗</span></a>
+</nav>
+
+<a href="projects.html" class="back-link">← Back to Projects</a>
+
+<!-- PROJECT HEADER -->
+<div class="proj-header">
+  <div class="proj-title">Underlyne</div>
+  <div class="proj-subtitle">A highlight and underline browser extension. Fully client-side, no backend. Annotations persist across sessions using Chrome storage.</div>
+  <div class="proj-stack">
+    <span class="stack-pill">JavaScript</span>
+    <span class="stack-pill">Chrome API</span>
+    <span class="stack-pill">Browser Extension</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="article-section">
+  <div class="article-section-title">What it is</div>
+  <div class="article-section-body">
+    <p>A browser extension for highlighting and underlining web content. Fully client-side, no backend. Annotations persist across sessions using Chrome storage. Built for people who read on the web and want their notes to stay.</p>
+    <p>Select any text on any webpage, choose a highlight color or underline style, and your annotation is saved. Close the tab, come back a week later — your highlights are still there.</p>
+  </div>
+</div>
+
+<div class="article-section">
+  <div class="article-section-title">How I built it</div>
+  <div class="article-section-body">
+    <p><strong>Extension Architecture:</strong> Chrome Extension Manifest V3 with a content script that injects into every page. Background service worker for handling storage operations and cross-tab communication.</p>
+    <p><strong>Text Selection:</strong> Uses the Range API to capture selected text positions. Stores annotations as serialized ranges with surrounding context (50 characters before and after) for re-anchoring on page reload.</p>
+    <p><strong>Persistence:</strong> Chrome storage.local for persistence with a sync fallback. storage.local offers more quota (100KB vs 100KB for sync), but sync enables cross-device synchronization for users signed into Chrome.</p>
+    <p><strong>UI:</strong> Custom popup interface for selecting highlight colors and viewing all annotations. Minimal design that doesn't interfere with the reading experience.</p>
+  </div>
+</div>
+
+<div class="article-section">
+  <div class="article-section-title">What failed & where it broke</div>
+  <ul class="failure-list">
+    <li><strong>Serialized ranges break on dynamic content:</strong> SPAs and infinite scroll pages change DOM structure after initial load. Annotations would highlight wrong text or nothing at all. Had to implement a re-anchoring algorithm that uses surrounding context to find the original text.</li>
+    <li><strong>Chrome storage.local 100KB quota:</strong> Heavy readers hit this limit within weeks. Each annotation stores the selected text, surrounding context, color, and metadata. Had to implement compression and an export/import feature.</li>
+    <li><strong>Content script injection timing:</strong> Running before DOM ready meant missing annotations on page load. Had to implement a mutation observer that waits for content to stabilize before re-anchoring.</li>
+    <li><strong>Cross-origin iframes:</strong> Academic papers embedded in iframes couldn't be annotated due to extension security model. No clean workaround — this remains a limitation.</li>
+  </ul>
+</div>
+
+<div class="article-section">
+  <div class="article-section-title">What I learned</div>
+  <div class="lesson-box">
+    <div class="lesson-box-body">DOM anchoring is harder than it looks. Text-based re-anchoring with surrounding context is more reliable than offset-based positioning, but still breaks on dynamic sites. Sometimes the web just wasn't built for this. The most robust solution is storing enough context to find the text again, not storing positions that will become invalid.</div>
+  </div>
+</div>
+
+<a href="https://github.com/Arun2565/Underlyne" target="_blank" class="proj-link-github">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+  View on GitHub →
+</a>
+
+<footer>
+  <div class="foot-copy">© 2026 Arun · Hyderabad, India</div>
+  <div class="foot-links">
+    <a href="https://github.com/Arun2565" target="_blank">GitHub</a>
+    <a href="https://x.com/ArunVarma479327" target="_blank">Twitter</a>
+    <a href="https://arunvarma1.substack.com" target="_blank">Substack</a>
+    <a href="mailto:arunvarma25683@gmail.com">Email</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('theme-btn');
+  if (html.dataset.theme === 'dark') {
+    html.dataset.theme = 'light';
+    btn.textContent = '☾ dark';
+  } else {
+    html.dataset.theme = 'dark';
+    btn.textContent = '☀ light';
+  }
+}
+</script>
+</body>
+</html>
