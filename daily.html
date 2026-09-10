@@ -262,97 +262,26 @@ footer {
 
 <div class="daily-entry">
   <div class="daily-entry-header">
-    <div class="daily-entry-title">Latent space isn't semantic space — it's usage-space</div>
+    <div class="daily-entry-title">What I read today</div>
     <div class="daily-entry-date">Sep 8</div>
   </div>
-  <div class="daily-entry-body">Embeddings cluster by how words are used, not what they mean. "Bank" (river) and "bank" (finance) have different embeddings not because the model understands the difference, but because they appear in different contexts. A paper finally made this click for me.</div>
-  <div class="daily-entry-source">Source: "Geometric Structure of Neural Embeddings" — Arora et al.</div>
+  <div class="daily-entry-body">A collection of things I learned today. Each section has a link to the original source so you can read more.</div>
+  <div class="daily-entry-source">Topics: Give Your Coding Agents a Memory You Own, and more</div>
 </div>
 
-<div class="daily-entry">
-  <div class="daily-entry-header">
-    <div class="daily-entry-title">Sentence-BERT cosine similarity breaks down past ~500 tokens</div>
-    <div class="daily-entry-date">Sep 7</div>
-  </div>
-  <div class="daily-entry-body">Long documents need chunking not just for context windows — the embeddings themselves degrade. Cosine similarity between a 1000-token passage and its 100-token summary was only 0.6. The embedding was averaging across too many topics.</div>
-  <div class="daily-entry-source">Source: Testing with all-MiniLM-L6-v2 on PapersWithCode abstracts</div>
-</div>
-
-<div class="daily-entry">
-  <div class="daily-entry-header">
-    <div class="daily-entry-title">Why chunk overlap matters more than chunk size for retrieval</div>
-    <div class="daily-entry-date">Sep 6</div>
-  </div>
-  <div class="daily-entry-body">Overlapping chunks by 20% gave better retrieval than doubling the chunk size. Context continuity at boundaries is more valuable than having more total chunks. A question at the edge of a chunk gets answered when the next chunk overlaps.</div>
-  <div class="daily-entry-source">Source: PaperMind dev log — FAISS retrieval experiments</div>
-</div>
-
-<div class="daily-entry">
-  <div class="daily-entry-header">
-    <div class="daily-entry-title">FAISS IndexIVFFlat: the cluster count tradeoff nobody explains</div>
-    <div class="daily-entry-date">Sep 5</div>
-  </div>
-  <div class="daily-entry-body">Too few clusters = slow search. Too many clusters = missed neighbors. The sweet spot is roughly sqrt(n) clusters for n vectors. But this assumes uniform distribution — real embeddings are clustered, so you need more clusters in high-density regions.</div>
-  <div class="daily-entry-source">Source: FAISS documentation + empirical testing</div>
-</div>
-
-<div class="daily-entry">
-  <div class="daily-entry-header">
-    <div class="daily-entry-title">Ollama's context window isn't what you think it is</div>
-    <div class="daily-entry-date">Sep 4</div>
-  </div>
-  <div class="daily-entry-body">Ollama reports 8192 context length for llama3.2:3b, but effective usable context is closer to 6000 tokens. Beyond that, the model starts ignoring earlier context. The "lost in the middle" problem is real and measurable.</div>
-  <div class="daily-entry-source">Source: "Lost in the Middle" — Liu et al. 2023</div>
-</div>
-
-<div class="daily-entry">
-  <div class="daily-entry-header">
-    <div class="daily-entry-title">LoRA rank isn't a hyperparameter — it's a budget</div>
-    <div class="daily-entry-date">Sep 3</div>
-  </div>
-  <div class="daily-entry-body">Rank 4 LoRA captures coarse patterns. Rank 16 captures details. Rank 64+ starts memorizing training data. Think of rank as "how many concepts can this adapter learn" rather than a tuning knob.</div>
-  <div class="daily-entry-source">Source: LoRA paper + fine-tuning experiments</div>
-</div>
-
-<div class="daily-entry">
-  <div class="daily-entry-header">
-    <div class="daily-entry-title">Gradio's file upload has a 2GB limit — and other things I learned the hard way</div>
-    <div class="daily-entry-date">Sep 2</div>
-  </div>
-  <div class="daily-entry-body">Building PaperMind's upload feature taught me more about browser limits than any documentation. 2GB file limit, no chunked upload by default, and memory spikes when processing large PDFs. Had to implement manual chunking.</div>
-  <div class="daily-entry-source">Source: PaperMind dev log</div>
-</div>
-
-<div class="daily-entry">
-  <div class="daily-entry-header">
-    <div class="daily-entry-title">Why I don't use vector databases for everything</div>
-    <div class="daily-entry-date">Sep 1</div>
-  </div>
-  <div class="daily-entry-body">ChromaDB, Qdrant, Pinecone — they're great for production. But for local development, FAISS flat index is faster, simpler, and has zero setup. Sometimes the boring choice is the right choice.</div>
-  <div class="daily-entry-source">Source: Personal experience + benchmarks</div>
-</div>
-
+<!-- DAILY ENTRIES -->
 <div class="sec-head" style="padding-top: 36px;">
-  <div class="sec-title">August 2026</div>
+  <div class="sec-title">June 2026</div>
   <div class="sec-line"></div>
 </div>
 
 <div class="daily-entry">
   <div class="daily-entry-header">
-    <div class="daily-entry-title">The embedding model that changed how I think about retrieval</div>
-    <div class="daily-entry-date">Aug 28</div>
+    <div class="daily-entry-title">Today's learnings</div>
+    <div class="daily-entry-date">Jun 23</div>
   </div>
-  <div class="daily-entry-body">Switched from all-MiniLM-L6-v2 to bge-small-en-v1.5 for PaperMind. Same speed, 12% better retrieval on my test set. The difference? BGE models are trained specifically for retrieval, not just general embeddings.</div>
-  <div class="daily-entry-source">Source: MTEB leaderboard + PaperMind experiments</div>
-</div>
-
-<div class="daily-entry">
-  <div class="daily-entry-header">
-    <div class="daily-entry-title">RAG is not a database with a language model attached</div>
-    <div class="daily-entry-date">Aug 25</div>
-  </div>
-  <div class="daily-entry-body">RAG is a reasoning system that happens to use retrieval. The retrieval part is easy. The hard part is constructing prompts that make the model actually use the retrieved context instead of relying on its training data.</div>
-  <div class="daily-entry-source">Source: "RAG is more than retrieval" — various papers</div>
+  <div class="daily-entry-body">How to be an AI researcher. A podcast that was a turning point for me. It brought me so many realizations because the answers felt very relatable to my situation.</div>
+  <div class="daily-entry-source">Source: Dr. Vidi, Broad Institute of MIT and Harvard</div>
 </div>
 
 <footer>
