@@ -4,6 +4,7 @@ title: "What I read today"
 date: 2026-09-08
 category: daily
 tags: [reading, agents, coding, distribution, small-models]
+permalink: /what-i-read-today/
 ---
 
 *A collection of things I learned today. Each section has a link to the original source so you can read more.*

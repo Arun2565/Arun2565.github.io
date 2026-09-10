@@ -4,6 +4,7 @@ title: "Today's learnings"
 date: 2026-06-23
 category: daily
 tags: [research, reasoning, productivity]
+permalink: /todays-learnings/
 ---
 
 ## How to be an AI researcher
