@@ -282,63 +282,12 @@ footer {
   </div>
 </div>
 
-<!-- ARTICLE PREVIEW -->
-<div class="sec-head" style="padding-top: 48px;">
-  <div class="sec-title">Featured</div>
-  <div class="sec-line"></div>
-</div>
-
-<div style="padding: 28px 0; border-top: 1px solid var(--border);">
-  <div style="font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--text3); letter-spacing: 0.08em; margin-bottom: 10px;">2026 09 08 · 12 MIN READ</div>
-  <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; font-style: italic; color: var(--text); line-height: 1.25; margin-bottom: 14px; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1.5px; text-decoration-color: var(--accent);">Why I stopped using LangChain (and what I use instead)</div>
-  
-  <div style="font-family: 'Spectral', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--text);">
-    <p style="margin-bottom: 18px;">Three months ago, I deleted LangChain from every project I was working on. Not because it's bad — it's actually quite impressive engineering. But I realized I was spending more time fighting the abstraction than solving the actual problem.</p>
-    
-    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; font-style: italic; color: var(--text); margin: 28px 0 12px; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; text-decoration-color: var(--text3);">The promise vs. the reality</h3>
-    
-    <p style="margin-bottom: 18px;">LangChain sells a vision: plug-and-play components for building LLM applications. Need retrieval? There's a loader. Need a vector store? Seventeen integrations. Need agents? Here's a pre-built ReAct loop.</p>
-    
-    <p style="margin-bottom: 18px;">The problem is that real applications don't fit into these boxes. The moment you need to do something slightly unusual — chunk documents by semantic similarity rather than character count, or implement a custom retrieval strategy that blends FAISS with BM25 — you're looking at the source code, trying to figure out where to inject your logic.</p>
-    
-    <blockquote style="border-left: 2px solid var(--accent); margin: 20px 0; padding: 10px 22px; color: var(--text2); font-style: italic; background: var(--bg2); border-radius: 0 2px 2px 0;">
-      Abstractions are great until you need to understand what's underneath. At that point, they become a tax on your comprehension.
-    </blockquote>
-    
-    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; font-style: italic; color: var(--text); margin: 28px 0 12px; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; text-decoration-color: var(--text3);">What I use instead</h3>
-    
-    <p style="margin-bottom: 18px;">I replaced the monolith with three focused libraries:</p>
-    
-    <ul style="margin: 14px 0 14px 22px;">
-      <li style="margin-bottom: 6px;"><strong>FAISS</strong> directly for vector search — no wrapper, no magic, just indices and queries</li>
-      <li style="margin-bottom: 6px;"><strong>Transformers</strong> directly for embedding and generation — full control over tokenization, batching, and inference</li>
-      <li style="margin-bottom: 6px;"><strong>Gradio</strong> for the UI — because I want to spend my time on the logic, not on frontend engineering</li>
-    </ul>
-    
-    <p style="margin-bottom: 18px;">The result? Half the dependencies. Twice the clarity. And when something breaks — which it still does — I know exactly where to look.</p>
-    
-    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; font-style: italic; color: var(--text); margin: 28px 0 12px; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; text-decoration-color: var(--text3);">When LangChain makes sense</h3>
-    
-    <p style="margin-bottom: 18px;">I'm not here to tell you LangChain is always wrong. If you're prototyping quickly, building a demo, or doing something that fits neatly into its patterns — it's fantastic. The issue is when production complexity meets framework assumptions. That's where the cracks show.</p>
-    
-    <p style="margin-bottom: 18px;">The best tool for an LLM application is the one you understand completely. For me, that turned out to be the raw libraries.</p>
-  </div>
-</div>
-
-<a href="#" class="post-item" style="border-top: 1px solid var(--border);">
-  <div class="post-left">
-    <span class="post-title">Continue reading: Building a local RAG pipeline →</span>
-  </div>
-  <span class="post-date">2026 07 23</span>
-</a>
-
 <footer>
   <div class="foot-copy">© 2026 Arun · Hyderabad, India</div>
   <div class="foot-links">
     <a href="https://github.com/Arun2565" target="_blank">GitHub</a>
     <a href="https://x.com/ArunVarma479327" target="_blank">Twitter</a>
     <a href="https://arunvarma1.substack.com" target="_blank">Substack</a>
-    <a href="mailto:arunvarma25683@gmail.com">Email</a>
   </div>
 </footer>
 
