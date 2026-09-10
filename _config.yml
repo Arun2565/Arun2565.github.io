@@ -24,6 +24,9 @@ google_analytics:
 # Permalink format for blog posts
 permalink: /:title/
 
+# Build future-dated posts
+future: true
+
 # Everything below here can be ignored, unless you want to change the theme entirely
 theme: minima
 plugins:
