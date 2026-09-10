@@ -17,7 +17,7 @@ Dr. Vidi is a researcher at the Broad Institute of MIT and Harvard. She did her 
 
 When Harnoor asks about how to start as an AI researcher, her reply was the thing I liked the most. She said to start sharing your learnings. It does not matter if the topic is already covered by many others. It does not matter if nobody sees it. She emphasizes this point strongly:
 
-> *"People who do things when there is no incentive for them will be provided a platform, since they will do it anyway."*
+> "People who do things when there is no incentive for them will be provided a platform, since they will do it anyway."
 
 This stuck with me. The idea is that you do not wait for the right time or the right opportunity. You just start. You build evidence that you are already on the curve. When someone later, maybe during a Masters admission or a job interview, wants to know about you, they can see your work and your thinking through your blogs and projects.
 
@@ -52,15 +52,9 @@ Chain-of-thought (CoT) is a method where the model "thinks step-by-step" before 
 
 Initially, CoT was a great hack. It let us read the trace of what the model was thinking without going through difficult architectural changes. But it increases inference-time compute significantly.
 
-Generating intermediate thinking tokens does not mean cognitive reasoning. There is a quote from the post that I want to remember:
+Generating intermediate thinking tokens does not mean cognitive reasoning. The model can flawlessly explain its steps. But since the previous tokens determine the next tokens, if one step goes away from the correct reasoning path, the model will confidently generate perfectly logical steps but arrive at wrong final answers. The text it generates and the actual computation happening inside are decoupled.
 
-> *"The text bottleneck is bankrupting corporate AI budgets, slowing down inference speeds, and masking the true nature of machine computation. To scale AI sustainably, the industry needs to move beyond the CoT tokens and to alternative reasoning mechanisms."*
-
-The reality is harsh. When an LLM shows its intermediate thinking tokens, we think it is reaching a conclusion. But a paper by Subbarao Kambhampati proves this is wrong.
-
-CoT is an imitation of reasoning. The model can flawlessly explain its steps. But since the previous tokens determine the next tokens, if one step goes away from the correct reasoning path, the model will confidently generate perfectly logical steps but arrive at wrong final answers. The text it generates and the actual computation happening inside are decoupled.
-
-A few more problems with CoT:
+A few problems with CoT:
 
 - Instead of teaching the model to generalize well for other examples, CoT generates more prompt-specific behaviors that go wrong in long reasoning chains.
 - Some cases show that forcing CoT answers reduces accuracy compared to direct answers.
