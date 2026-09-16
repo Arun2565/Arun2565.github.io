@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Why AI writing is bad"
+title: "What I read today"
 date: 2026-09-16
-category: guide
+category: daily
 tags: [ai, writing, claude, language-models, voice]
 ---
 
