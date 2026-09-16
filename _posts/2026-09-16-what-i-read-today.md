@@ -1,10 +1,13 @@
 ---
 layout: post
-title: "What I read today"
+title: "Why AI writing falls short"
 date: 2026-09-16
 category: daily
 tags: [ai, writing, claude, language-models, voice]
+permalink: /why-ai-writing-falls-short/
 ---
+
+*A collection of things I learned today. Each section has a link to the original source so you can read more.*
 
 I read two essays on why AI writing falls short. Here is what I learned.
 
