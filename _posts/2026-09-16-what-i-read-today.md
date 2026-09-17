@@ -1,43 +1,63 @@
 ---
 layout: post
-title: "Why AI writing falls short"
+title: "AI @ writing"
 date: 2026-09-16
 category: daily
 tags: [ai, writing, claude, language-models, voice]
-permalink: /why-ai-writing-falls-short/
+permalink: /ai-at-writing/
 ---
 
-*A collection of things I learned today. Each section has a link to the original source so you can read more.*
+Why AI models are not good enough at writing, out of the box
 
-I read two essays on why AI writing falls short. Here is what I learned.
+Arun Varma
+Sep 16, 2026
 
-## The problem is rhythmic, not lexical
+Writing helps me to think and share ideas. It forces to turn my vague thoughts into something concrete. As AI becomes part of every workflow, we need to use it for writing without losing our own style. As I am going on this journey of writing daily on what I read and what I understood, these articles had some new mental models about why AI isn't that good at writing as it is at coding.
 
-AI writing has an uncanny valley. The words are fine, but the texture is off. James Wang compares it to food that is seasoned right but has a gritty mouthfeel. We can tell something is wrong even when we cannot say exactly what.
+These are the two articles that I read today, and I wrote my understandings from these pieces. You can directly checkout the full articles from the reference section.
 
-The usual tells, like em dashes, are poor markers. They get patched in the next model update. The real issue is that AI predicts tokens, not meaning. This creates rhythmic patterns and patterned sentences that feel off even when the words are correct.
+## Why Is AI Bad at Writing?
+**by James Wang — Weighty Thoughts**
 
-## The mic-drop problem
+Writing the first-draft with AI is much worse and it's better to write it yourself.
 
-Claude uses too many short emphatic statements. A mic-drop is a phrase that emphasizes a point. When every sentence is a mic-drop, nothing stands out. Human writing pulls back and creates tension. AI writing is constant crescendo.
+The most talked about em-dashes thing in AI writing — James Wang says that this may be solved with a next model release.
 
-## All models converge
+But the patterns of AI writing will be present even with the forthcoming models.
 
-Language models are trained on similar data. Their sentences resemble templates more than human sentences do. They struggle to track long-form arguments the way humans do. This is not a bug. It is how they work.
+Their sentences have some templates that they follow, which have some resemblance with the previous sentences.
 
-## Voice is what makes writing worth reading
+All of the AI writing has some rhythmic issues, since they are token predictors.
 
-Nathan Lambert says the best writing relies on voice. Voice is how you process information into a unique representation. Language models are trained to be neutral on sensitive topics and to avoid strong opinions. Good writing does the opposite.
+James Wang says that Claude has mic-drop statements everywhere. Mic-drop means it is a phrase that is used to emphasize something, and Claude adds mic-drops almost everywhere which makes nothing emphasized.
 
-To get great AI writing, we need models with personality and a strong sense of self. No company is building this because writing is not a big enough market. The money is in coding models.
+James Wang thinks it will take a lot of time for AI writing to be able to express the meaning.
 
-## What this means for you
+Using AI for research is fine and maybe making drafts with it is also good if that piece is not recognizable as done with AI.
 
-Use AI for research and editing. Write the first draft yourself. Writing is worth reading because of the person behind it. Without that, you could just ask the model directly.
+The main thing is to add your thoughts, style and what you want to convey.
 
-AI will become as common as computer use. The question is not whether to use it, but how to use it without losing your own style.
+He concludes that AI will be in the future as common as computer use.
+
+## Why AI writing is mid
+**by Nathan Lambert — Interconnects AI**
+
+Nathan Lambert says that with his experience of training models, there is an inbuilt limitation for AI to write good.
+
+What we need to create a language model that can write wonderfully is to give it a strong personality, and potentially a strong "sense of self"—if that actually impacts a language model's thinking.
+
+When I think about how I write, the best writing relies on voice. Voice is where you process information into a unique representation—this is often what makes information compelling.
+
+We need to shape these base models with post-training designed for writing, just as the best writers bend facts to create narrative.
+
+There are no market incentives to create this model—all the money in AI is elsewhere, in training coding models, and writing isn't a particularly lucrative market to disrupt.
+
+We need to be bold enough to create models with personality if we want writing to fall out. We need models that speak their views loudly and confidently.
+
+These models are built around the metrics needed for the average user and mostly aligned to train mostly in math and coding.
+
+Even if this project was invested in, I don't expect the models to be close to the best humans at elegant writing within a few years. — Nathan Lambert
 
 ## References
-
-- Wang, J. "Why Is AI Bad at Writing?" Weighty Thoughts. [https://weightythoughts.com/p/why-is-ai-bad-at-writing](https://weightythoughts.com/p/why-is-ai-bad-at-writing)
-- Lambert, N. "Why AI writing is mid." Interconnects AI. [https://www.interconnects.ai/p/why-ai-writing-is-mid](https://www.interconnects.ai/p/why-ai-writing-is-mid)
+- [Why Is AI Bad at Writing?](https://weightythoughts.com/p/why-is-ai-bad-at-writing) — James Wang, Weighty Thoughts
+- [Why AI writing is mid](https://www.interconnects.ai/p/why-ai-writing-is-mid) — Nathan Lambert, Interconnects AI
