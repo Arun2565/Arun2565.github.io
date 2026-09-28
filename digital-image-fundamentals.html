@@ -24,7 +24,8 @@
 html { font-size: 16px; scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--text); font-family: 'Spectral', Georgia, serif; font-weight: 400; min-height: 100vh; transition: background 0.35s ease, color 0.35s ease; -webkit-font-smoothing: antialiased; }
 body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
-.wrap { max-width: 680px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+.wrap { max-width: 1020px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+.wrap-narrow { max-width: 680px; margin: 0 auto; }
 header { padding: 60px 0 36px; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
 .brand-name { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 500; font-style: italic; color: var(--accent); line-height: 1; letter-spacing: -0.02em; }
 .brand-sub { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 300; color: var(--text2); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 7px; }
@@ -64,6 +65,24 @@ nav .ext { font-size: 0.5rem; vertical-align: super; margin-left: 2px; opacity: 
 .toc ol { margin: 0 0 0 18px; font-size: 0.9rem; line-height: 1.9; }
 .toc a { color: var(--text2); text-decoration: none; }
 .toc a:hover { color: var(--accent); }
+/* Floating left TOC */
+.layout { display: flex; gap: 36px; align-items: flex-start; }
+.toc-side { width: 230px; flex-shrink: 0; position: sticky; top: 24px; max-height: calc(100vh - 48px); overflow-y: auto; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 18px 18px 14px; }
+.toc-side .toc-title { margin-bottom: 12px; }
+.toc-side ol { list-style: none; margin: 0; padding: 0; }
+.toc-side li { margin: 0; padding: 0; }
+.toc-side a { display: block; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.02em; color: var(--text2); text-decoration: none; padding: 6px 8px; border-left: 2px solid transparent; border-bottom: none; line-height: 1.5; }
+.toc-side a:hover { color: var(--accent); border-bottom: none; }
+.toc-side a.active { color: var(--accent); border-left-color: var(--accent); background: var(--glow); border-radius: 0 3px 3px 0; }
+.article-col { flex: 1; min-width: 0; max-width: 680px; }
+.toc-toggle { display: none; width: 100%; background: var(--bg2); border: 1px solid var(--border2); color: var(--text2); font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px 14px; border-radius: 3px; cursor: pointer; margin-bottom: 16px; }
+@media (max-width: 900px) {
+  .layout { display: block; }
+  .toc-toggle { display: block; }
+  .toc-side { display: none; width: 100%; position: static; max-height: none; margin-bottom: 20px; }
+  .toc-side.open { display: block; }
+  .article-col { max-width: 100%; }
+}
 .back-link { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); text-decoration: none; margin-top: 48px; padding: 6px 0; }
 .back-link:hover { color: var(--accent); }
 footer { border-top: 1px solid var(--border); padding: 24px 0 52px; display: flex; justify-content: space-between; align-items: center; margin-top: 52px; }
@@ -77,6 +96,7 @@ footer { border-top: 1px solid var(--border); padding: 24px 0 52px; display: fle
 <body>
 <div class="wrap">
 
+<div class="wrap-narrow">
 <header>
   <div>
     <a href="index.html" style="text-decoration:none">
@@ -97,7 +117,28 @@ footer { border-top: 1px solid var(--border); padding: 24px 0 52px; display: fle
   <a href="https://x.com/ArunVarma479327" target="_blank">twitter <span class="ext">↗</span></a>
   <a href="https://arunvarma1.substack.com" target="_blank">substack <span class="ext">↗</span></a>
 </nav>
+</div>
 
+<div class="layout">
+<aside class="toc-side" id="toc-side">
+<div class="toc-title">Contents</div>
+<ol>
+<li><a href="#capture">1 · Capture &amp; Processing</a></li>
+<li><a href="#pixels">2 · Pixels</a></li>
+<li><a href="#resolution">3 · Resolution</a></li>
+<li><a href="#bitdepth">4 · Bit Depth</a></li>
+<li><a href="#grayscale">5 · Grayscale</a></li>
+<li><a href="#rgb">6 · RGB</a></li>
+<li><a href="#hsv">7 · HSV</a></li>
+<li><a href="#coords">8 · Coordinates</a></li>
+<li><a href="#intensity">9 · Intensity</a></li>
+<li><a href="#ops">10 · Operations</a></li>
+<li><a href="#refs">References</a></li>
+</ol>
+</aside>
+
+<div class="article-col">
+<button class="toc-toggle" onclick="document.getElementById('toc-side').classList.toggle('open')">☰ Contents</button>
 <article>
 <header class="post-header">
   <h1 class="post-title">Digital Image Fundamentals</h1>
@@ -106,24 +147,6 @@ footer { border-top: 1px solid var(--border); padding: 24px 0 52px; display: fle
 
 <div class="post-content">
 <p>A practical guide to how digital images are captured, represented, and manipulated — from Bayer filters and pixels to RGB, HSV, coordinates, and core OpenCV operations.</p>
-<blockquote>Source: <em>Digital Image Fundamentals.pdf</em> — restructured for the web with original figures.</blockquote>
-
-<div class="toc">
-<div class="toc-title">Contents</div>
-<ol>
-<li><a href="#capture">1. How Is a Digital Image Captured &amp; Processed?</a></li>
-<li><a href="#pixels">2. Pixels</a></li>
-<li><a href="#resolution">3. Image Resolution</a></li>
-<li><a href="#bitdepth">4. Bit Depth</a></li>
-<li><a href="#grayscale">5. Grayscale</a></li>
-<li><a href="#rgb">6. RGB</a></li>
-<li><a href="#hsv">7. HSV (Hue, Saturation, Value)</a></li>
-<li><a href="#coords">8. Image Coordinates</a></li>
-<li><a href="#intensity">9. Pixel Intensity</a></li>
-<li><a href="#ops">10. Image Operations</a></li>
-<li><a href="#refs">References</a></li>
-</ol>
-</div>
 
 <h2 id="capture">1. How Is a Digital Image Captured &amp; Processed?</h2>
 <p>Light falls on a <strong>sensor</strong> present in a camera / phone which consists of a grid of pixels. The light-sensitive element on a pixel cannot detect colour — only <strong>intensity</strong>.</p>
@@ -265,7 +288,10 @@ dst = cv.warpAffine(img, M, (cols, rows))</code></pre>
 </div>
 <a href="writing.html" class="back-link">← back to writing</a>
 </article>
+</div><!-- /article-col -->
+</div><!-- /layout -->
 
+<div class="wrap-narrow">
 <footer>
   <div class="foot-copy">© 2026 Arun · Hyderabad, India</div>
   <div class="foot-links">
@@ -283,6 +309,24 @@ function toggleTheme() {
   if (html.dataset.theme === 'dark') { html.dataset.theme = 'light'; btn.textContent = '☾ dark'; }
   else { html.dataset.theme = 'dark'; btn.textContent = '☀ light'; }
 }
+// Scrollspy for floating TOC
+(function() {
+  const links = Array.from(document.querySelectorAll('.toc-side a'));
+  const map = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(a => a.classList.remove('active'));
+        const a = map.get(e.target.id);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  ['capture','pixels','resolution','bitdepth','grayscale','rgb','hsv','coords','intensity','ops','refs'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) obs.observe(el);
+  });
+})();
 </script>
 </body>
 </html>

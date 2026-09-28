@@ -8,8 +8,6 @@ tags: [image-processing, computer-vision, opencv, rgb, hsv, pixels]
 
 A practical guide to how digital images are captured, represented, and manipulated — from Bayer filters and pixels to RGB, HSV, coordinates, and core OpenCV operations.
 
-> Source: *Digital Image Fundamentals.pdf* — restructured for the web with original figures.
-
 ## Contents
 
 1. [How Is a Digital Image Captured & Processed?](#1-how-is-a-digital-image-captured--processed)
