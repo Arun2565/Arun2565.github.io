@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Image Fundamentals · Arun Varma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Spectral:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"] {
+  --bg: #0f0f0d; --bg2: #161613; --bg3: #1c1c18;
+  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.14);
+  --text: #d4cfc4; --text2: #7a7770; --text3: #3f3e3c;
+  --accent: #b8a96a; --accent2: #c97b5a; --glow: rgba(184,169,106,0.05);
+}
+:root[data-theme="light"] {
+  --bg: #ffffff; --bg2: #f0ede6; --bg3: #e8e4db;
+  --border: rgba(0,0,0,0.07); --border2: rgba(0,0,0,0.14);
+  --text: #000000; --text2: #333333; --text3: #555555;
+  --accent: #8a6820; --accent2: #b8502e; --glow: rgba(138,104,32,0.06);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Spectral', Georgia, serif; font-weight: 400; min-height: 100vh; transition: background 0.35s ease, color 0.35s ease; -webkit-font-smoothing: antialiased; }
+body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
+.wrap { max-width: 680px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+header { padding: 60px 0 36px; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
+.brand-name { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 500; font-style: italic; color: var(--accent); line-height: 1; letter-spacing: -0.02em; }
+.brand-sub { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 300; color: var(--text2); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 7px; }
+.brand-sub em { font-style: normal; color: var(--accent2); }
+.toggle-btn { background: none; border: 1px solid var(--border2); color: var(--text2); font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 7px 13px; border-radius: 2px; cursor: pointer; transition: all 0.25s; flex-shrink: 0; margin-bottom: 4px; }
+.toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+nav { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); display: flex; align-items: center; margin-bottom: 48px; padding: 1px 0; }
+nav a { font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); text-decoration: none; padding: 10px 16px 10px 0; transition: color 0.2s; }
+nav a:not(:first-child) { padding-left: 16px; border-left: 1px solid var(--border); }
+nav a:hover, nav a.active { color: var(--text); }
+nav .ext { font-size: 0.5rem; vertical-align: super; margin-left: 2px; opacity: 0.5; }
+.post-header { margin-bottom: 32px; }
+.post-header .post-title { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; font-style: italic; color: var(--text); line-height: 1.25; margin-bottom: 14px; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1.5px; text-decoration-color: var(--accent); }
+.post-header .post-meta { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--text3); letter-spacing: 0.08em; }
+.post-tag { font-family: 'DM Mono', monospace; font-size: 0.58rem; font-style: italic; color: var(--accent); }
+.post-content { font-family: 'Spectral', serif; font-size: 1.05rem; font-weight: 400; line-height: 1.85; color: var(--text); }
+.post-content h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; font-style: italic; margin: 36px 0 16px; padding-bottom: 6px; border-bottom: 1.5px solid var(--border); }
+.post-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; font-style: italic; margin: 28px 0 12px; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; text-decoration-color: var(--text3); }
+.post-content p { margin-bottom: 18px; }
+.post-content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+.post-content a:hover { border-bottom-color: var(--accent); }
+.post-content code { font-family: 'DM Mono', monospace; font-size: 0.82em; background: var(--bg2); padding: 2px 6px; border-radius: 2px; color: var(--accent2); }
+.post-content pre { background: var(--bg2); border: 1px solid var(--border); border-radius: 2px; padding: 18px 20px; overflow-x: auto; margin: 20px 0; font-size: 0.78rem; line-height: 1.7; }
+.post-content pre code { background: none; padding: 0; color: var(--text); font-size: inherit; }
+.post-content blockquote { border-left: 2px solid var(--accent); margin: 20px 0; padding: 10px 22px; color: var(--text2); font-style: italic; background: var(--bg2); border-radius: 0 2px 2px 0; }
+.post-content img { max-width: 100%; border-radius: 2px; margin: 24px 0 8px; border: 1px solid var(--border); }
+.post-content figure { margin: 0 0 20px; }
+.post-content figcaption { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--text3); line-height: 1.6; margin-bottom: 12px; }
+.post-content ul, .post-content ol { margin: 14px 0 14px 22px; }
+.post-content li { margin-bottom: 6px; }
+.post-content hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+.post-content table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.85rem; }
+.post-content th, .post-content td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+.post-content th { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); background: var(--bg2); }
+.toc { background: var(--bg2); border: 1px solid var(--border); border-radius: 2px; padding: 18px 22px; margin: 24px 0 32px; }
+.toc-title { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; }
+.toc ol { margin: 0 0 0 18px; font-size: 0.9rem; line-height: 1.9; }
+.toc a { color: var(--text2); text-decoration: none; }
+.toc a:hover { color: var(--accent); }
+.back-link { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); text-decoration: none; margin-top: 48px; padding: 6px 0; }
+.back-link:hover { color: var(--accent); }
+footer { border-top: 1px solid var(--border); padding: 24px 0 52px; display: flex; justify-content: space-between; align-items: center; margin-top: 52px; }
+.foot-copy { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text3); letter-spacing: 0.08em; }
+.foot-links { display: flex; gap: 18px; }
+.foot-links a { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); text-decoration: none; }
+.foot-links a:hover { color: var(--accent); }
+@media (max-width: 520px) { .wrap { padding: 0 18px; } header { padding: 40px 0 28px; flex-direction: column; align-items: flex-start; gap: 14px; } .brand-name { font-size: 2.4rem; } footer { flex-direction: column; gap: 12px; align-items: flex-start; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <a href="index.html" style="text-decoration:none">
+      <div class="brand-name">Arun.</div>
+      <div class="brand-sub">ml engineer &amp;&amp; <em>data science student</em></div>
+    </a>
+  </div>
+  <button class="toggle-btn" id="theme-btn" onclick="toggleTheme()">☾ dark</button>
+</header>
+
+<nav>
+  <a href="index.html">about</a>
+  <a href="projects.html">projects</a>
+  <a href="writing.html" class="active">writing</a>
+  <a href="daily.html">daily</a>
+  <a href="index.html#skills">skills</a>
+  <a href="https://github.com/Arun2565" target="_blank">github <span class="ext">↗</span></a>
+  <a href="https://x.com/ArunVarma479327" target="_blank">twitter <span class="ext">↗</span></a>
+  <a href="https://arunvarma1.substack.com" target="_blank">substack <span class="ext">↗</span></a>
+</nav>
+
+<article>
+<header class="post-header">
+  <h1 class="post-title">Digital Image Fundamentals</h1>
+  <div class="post-meta">2026 09 28 · <span class="post-tag">guide</span> · image-processing, computer-vision, opencv</div>
+</header>
+
+<div class="post-content">
+<p>A practical guide to how digital images are captured, represented, and manipulated — from Bayer filters and pixels to RGB, HSV, coordinates, and core OpenCV operations.</p>
+<blockquote>Source: <em>Digital Image Fundamentals.pdf</em> — restructured for the web with original figures.</blockquote>
+
+<div class="toc">
+<div class="toc-title">Contents</div>
+<ol>
+<li><a href="#capture">1. How Is a Digital Image Captured &amp; Processed?</a></li>
+<li><a href="#pixels">2. Pixels</a></li>
+<li><a href="#resolution">3. Image Resolution</a></li>
+<li><a href="#bitdepth">4. Bit Depth</a></li>
+<li><a href="#grayscale">5. Grayscale</a></li>
+<li><a href="#rgb">6. RGB</a></li>
+<li><a href="#hsv">7. HSV (Hue, Saturation, Value)</a></li>
+<li><a href="#coords">8. Image Coordinates</a></li>
+<li><a href="#intensity">9. Pixel Intensity</a></li>
+<li><a href="#ops">10. Image Operations</a></li>
+<li><a href="#refs">References</a></li>
+</ol>
+</div>
+
+<h2 id="capture">1. How Is a Digital Image Captured &amp; Processed?</h2>
+<p>Light falls on a <strong>sensor</strong> present in a camera / phone which consists of a grid of pixels. The light-sensitive element on a pixel cannot detect colour — only <strong>intensity</strong>.</p>
+<p>To calculate the RGB values of each pixel, the camera mostly uses a <strong>Bayer filter</strong>. This Bayer filter places an R, G, or B filter on top of each pixel, helping to detect the value of one particular colour. The missing two colour values are estimated using adjacent pixels through <strong>demosaicing</strong>.</p>
+<p>The Bayer filter pattern uses <strong>two green pixels for every red and blue pixel</strong>, because the human eye is more sensitive to green than to other wavelengths. The Bayer filter requires only one filter sensor per pixel, rather than needing separate sensors for each colour channel. Digital cameras then use demosaicing algorithms to convert this colour mosaic into an equally sized mosaic of true colours, effectively reconstructing the full RGB information at every pixel location.</p>
+<figure><img src="images/digital-image-fundamentals/fig1-p0.png" alt="Capture overview"><figcaption>Figure 1 — Capture overview: sensor → Bayer filter (2G:1R:1B) → demosaicing → full colour.</figcaption></figure>
+<blockquote>Key takeaway: each photosite measures one colour; full RGB at every pixel is <em>reconstructed</em>.</blockquote>
+
+<h2 id="pixels">2. Pixels</h2>
+<p><strong>Pixel</strong>, short for <em>picture element</em>, represents a single point of light carrying colour and brightness information.</p>
+<ul>
+<li>For a <strong>greyscale</strong> image, each pixel has a value between <strong>0 and 255</strong>, representing the darkest and lightest parts of the image respectively.</li>
+<li><strong>Coloured</strong> images consist of three separate channels: <strong>red, green, and blue</strong>. The overall image is formed by combining these RGB channels into one consolidated image.</li>
+</ul>
+
+<h2 id="resolution">3. Image Resolution</h2>
+<ul>
+<li>An image with <strong>28 × 28 pixels</strong> has a resolution of <strong>784 pixels</strong>.</li>
+<li><strong>Display resolution</strong> is the maximum that can fit on the full dimension of an image. Example: <code>800 × 600 = 480,000</code> pixels on a PC screen.</li>
+<li><strong>Pixel density</strong> determines the number of pixels per inch of image. The more pixels per unit width, the higher the clarity.</li>
+<li>Resolution is measured in <strong>pixels per inch (PPI)</strong>.</li>
+</ul>
+<blockquote>Pixel dimension = Length × PPI. More PPI leads to more information, detail, sharpness, and better quality.</blockquote>
+<figure><img src="images/digital-image-fundamentals/fig2-p1.png" alt="Resolution diagram"><figcaption>Figure 2 — Image resolution = width × height; display resolution = max pixels on screen; PPI = pixels per inch.</figcaption></figure>
+<figure><img src="images/digital-image-fundamentals/fig3-p1.png" alt="300 ppi vs 72 ppi"><figcaption>Figure 3 — Resolution comparison: 300 PPI vs 72 PPI. Same scene, far more detail at higher PPI.</figcaption></figure>
+<table><tr><th>Term</th><th>Meaning</th><th>Example</th></tr>
+<tr><td>Image resolution</td><td>width × height</td><td>28 × 28 = 784</td></tr>
+<tr><td>Display resolution</td><td>max pixels a screen can show</td><td>800 × 600 = 480,000</td></tr>
+<tr><td>Pixel density (PPI)</td><td>pixels per inch</td><td>300 PPI sharper than 72 PPI</td></tr></table>
+
+<h2 id="bitdepth">4. Bit Depth</h2>
+<p><strong>Bit depth</strong> refers to the number of bits used to represent colour or brightness information of a single pixel. In <strong>line art</strong>, where only two colours are required — 0 for black and 1 for white — <strong>one bit suffices</strong>.</p>
+<p>For greyscale images, <strong>8 bits = 1 byte</strong> per pixel. With 8 bits, we have <strong>2⁸ = 256 tonal levels</strong> — 256 distinct shades of grey from pure black to pure white.</p>
+<figure><img src="images/digital-image-fundamentals/fig4-p1.png" alt="Bit depth"><figcaption>Figure 4 — 1-bit (line art, 2¹ = 2 values) versus 8-bit greyscale (2⁸ = 256 values).</figcaption></figure>
+
+<h2 id="grayscale">5. Grayscale</h2>
+<p>Grayscale is the simplest model, representing colours using brightness <strong>0 (black) to 255 (white)</strong>. Used when <strong>shape, structure, and brightness</strong> matter more than colour. Uses less space and processes faster.</p>
+<p><strong>Applications:</strong></p>
+<ol>
+<li><strong>OCR and document scanning</strong> — more detail while keeping file size small.</li>
+<li><strong>Medical imaging and terrain mapping</strong> — more depth. 8-bit = 256 shades; 16-bit = 65,536 shades. 8-bit for general use, 16-bit for medical / remote sensing.</li>
+</ol>
+<table><tr><th>Depth</th><th>Levels</th><th>Use</th></tr>
+<tr><td>1-bit</td><td>2</td><td>line art</td></tr>
+<tr><td>8-bit</td><td>256</td><td>general use</td></tr>
+<tr><td>16-bit</td><td>65,536</td><td>medical, remote sensing</td></tr></table>
+
+<h2 id="rgb">6. RGB</h2>
+<p>RGB uses <strong>additive colour mixing</strong>. Heavily used in screens. Based on a <strong>3D Cartesian system</strong>. Digital images are <strong>8 bits per channel</strong> = 256 values per channel:</p>
+<blockquote>R × G × B = 256³ = 16,777,216 colours. Example: (255, 0, 0) = pure red.</blockquote>
+<figure><img src="images/digital-image-fundamentals/fig5-p2.png" alt="RGB cube"><figcaption>Figure 5 — RGB colour cube: three axes (R, G, B), each 0–255.</figcaption></figure>
+
+<h2 id="hsv">7. HSV (Hue, Saturation, Value)</h2>
+<p>HSV is more <strong>perceptually uniform</strong> than RGB — closer to how humans perceive colour.</p>
+<ul>
+<li><strong>Hue</strong> — type of colour, 0–360°: red 0°, yellow 60°, green 120°, cyan 180°, blue 240°, magenta 300°.</li>
+<li><strong>Saturation</strong> — intensity 0–100%. 0% = grey, 100% = pure colour.</li>
+<li><strong>Value</strong> — brightness 0–100%. 0% = black regardless of hue/saturation.</li>
+</ul>
+<p>HSV has an advantage over RGB for extracting grayscale information, since each channel can be separated.</p>
+<figure><img src="images/digital-image-fundamentals/fig6-p3.png" alt="HSV"><figcaption>Figure 6 — HSV: hue (0–360°), saturation (depth), value (brightness 0–100%).</figcaption></figure>
+
+<h2 id="coords">8. Image Coordinates</h2>
+<ul>
+<li><strong>Origin (0, 0)</strong> — top-left corner.</li>
+<li><strong>X-axis</strong> — horizontal, left → right (column number).</li>
+<li><strong>Y-axis</strong> — vertical, top → bottom (row number).</li>
+</ul>
+<p>Pixel location is <code>(x, y)</code> with both starting from 0.</p>
+<figure><img src="images/digital-image-fundamentals/fig7-p3.png" alt="Coordinates"><figcaption>Figure 7 — Buffer/pixel coordinates. Origin (0, 0) top-left.</figcaption></figure>
+<blockquote>⚠️ Unlike maths class: <strong>y grows downwards</strong>.</blockquote>
+
+<h2 id="intensity">9. Pixel Intensity</h2>
+<p><strong>Pixel intensity</strong> = sum, mean, or median intensity within a region of interest (ROI).</p>
+<ul>
+<li>Grayscale: intensity ∝ pixel value (0 = black, 255 = white).</li>
+<li>Colour: computed from RGB channels.</li>
+</ul>
+<p>Used for <strong>thresholding, segmentation, feature extraction</strong>. Mean = overall brightness; sum = total brightness; median = robust to noise.</p>
+
+<h2 id="ops">10. Image Operations</h2>
+<p>Geometric transformations deform the pixel grid and map it to the destination image.</p>
+
+<h3>10.1 Resize</h3>
+<p>Prefer <code>cv.INTER_AREA</code> for shrinking, <code>cv.INTER_CUBIC</code> / <code>cv.INTER_LINEAR</code> for zooming. Example: 800×600 → ×0.5 → 400×300 (480,000 → 120,000 px).</p>
+<pre><code>cv.resize(src, dsize[, dst[, fx[, fy[, interpolation]]]]) -&gt; dst</code></pre>
+<pre><code>import cv2 as cv
+img = cv.imread("messi5.jpg")
+res = cv.resize(img, None, fx=2, fy=2, interpolation=cv.INTER_CUBIC)
+# OR
+height, width = img.shape[:2]
+res = cv.resize(img, (2*width, 2*height), interpolation=cv.INTER_CUBIC)</code></pre>
+
+<h3>10.2 Crop</h3>
+<p>Selecting a region, not resizing. No dedicated <code>crop()</code> — use NumPy slicing <code>image[y1:y2, x1:x2]</code>.</p>
+<pre><code># NumPy slicing: image[y1:y2, x1:x2]
+ball = img[280:340, 330:390]</code></pre>
+
+<h3>10.3 Rotate</h3>
+<p>Parameters: centre, angle, scale. Positive angle = counter-clockwise.</p>
+<pre><code>import cv2 as cv
+img = cv.imread("image.jpg")
+height, width = img.shape[:2]
+center = (width // 2, height // 2)
+matrix = cv.getRotationMatrix2D(center, 45, 1.0)
+rotated = cv.warpAffine(img, matrix, (width, height))</code></pre>
+
+<h3>10.4 Flip</h3>
+<pre><code>import cv2 as cv
+horizontal = cv.flip(img, 1)  # Horizontal flip
+vertical = cv.flip(img, 0)    # Vertical flip
+both = cv.flip(img, -1)       # Both directions</code></pre>
+
+<h3>10.5 Translate</h3>
+<p>Shifting location.</p>
+<pre><code>import numpy as np
+import cv2 as cv
+M = np.float32([[1, 0, 100], [0, 1, 50]])
+dst = cv.warpAffine(img, M, (cols, rows))</code></pre>
+
+<hr>
+<h2 id="refs">References</h2>
+<ol style="font-size:0.9rem; color: var(--text2);">
+<li>Bayer filter: <a href="https://www.whatdigitalcamera.com/technology_guides/bayer-filter-work-60461">whatdigitalcamera.com</a></li>
+<li>Demosaicing: <a href="https://en.wikipedia.org/wiki/Demosaicing">Wikipedia</a></li>
+<li>Pixel, Bit depth: <a href="https://graphics-pro.com/feature/the-anatomy-of-a-pixel/">graphics-pro.com</a></li>
+<li>Resolution, Bits and Channels: <a href="https://blogs.ubc.ca/visa110/files/2017/06/ResolutionBitsChannels.pdf">UBC PDF</a></li>
+<li>Pixel density: <a href="https://medium.com/conspectushub/digital-image-representation-inside-a-computer-3481f87d348c">Medium</a></li>
+<li>Grayscale: <a href="https://www.lenovo.com/us/en/glossary/grayscale/">Lenovo glossary</a></li>
+<li>RGB: <a href="https://vincmazet.github.io/bip/digital-images/color-models/">vincmazet.github.io</a></li>
+<li>HSV: <a href="https://zenn.dev/yuto_mo/articles/2f4e8168cc817f">zenn.dev</a></li>
+<li>HSV image: <a href="https://medium.com/@dijdomv01/a-beginners-guide-to-understand-the-color-models-rgb-and-hsv-244226e4b3e3">Medium</a></li>
+<li>Image coordinate system: <a href="https://apxml.com/courses/introduction-to-computer-vision/chapter-2-digital-image-fundamentals/image-coordinate-systems">apxml.com</a></li>
+<li>Geometric transformations: <a href="https://docs.opencv.org/4.13.0/da/d6e/tutorial_py_geometric_transformations.html">OpenCV docs</a></li>
+<li>Crop/ROI: <a href="https://docs.opencv.org/4.12.0/d3/df2/tutorial_py_basic_ops.html">OpenCV docs</a></li>
+<li>Flip: <a href="https://docs.opencv.org/4.5.4/d2/de8/group__core__array.html">OpenCV docs</a></li>
+</ol>
+
+</div>
+<a href="writing.html" class="back-link">← back to writing</a>
+</article>
+
+<footer>
+  <div class="foot-copy">© 2026 Arun · Hyderabad, India</div>
+  <div class="foot-links">
+    <a href="https://github.com/Arun2565" target="_blank">GitHub</a>
+    <a href="https://x.com/ArunVarma479327" target="_blank">Twitter</a>
+    <a href="https://arunvarma1.substack.com" target="_blank">Substack</a>
+  </div>
+</footer>
+
+</div>
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('theme-btn');
+  if (html.dataset.theme === 'dark') { html.dataset.theme = 'light'; btn.textContent = '☾ dark'; }
+  else { html.dataset.theme = 'dark'; btn.textContent = '☀ light'; }
+}
+</script>
+</body>
+</html>
