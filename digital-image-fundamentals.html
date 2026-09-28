@@ -24,7 +24,7 @@
 html { font-size: 16px; scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--text); font-family: 'Spectral', Georgia, serif; font-weight: 400; min-height: 100vh; transition: background 0.35s ease, color 0.35s ease; -webkit-font-smoothing: antialiased; }
 body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
-.wrap { max-width: 1020px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
 .wrap-narrow { max-width: 680px; margin: 0 auto; }
 header { padding: 60px 0 36px; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
 .brand-name { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 500; font-style: italic; color: var(--accent); line-height: 1; letter-spacing: -0.02em; }
@@ -65,17 +65,21 @@ nav .ext { font-size: 0.5rem; vertical-align: super; margin-left: 2px; opacity: 
 .toc ol { margin: 0 0 0 18px; font-size: 0.9rem; line-height: 1.9; }
 .toc a { color: var(--text2); text-decoration: none; }
 .toc a:hover { color: var(--accent); }
-/* Floating left TOC */
-.layout { display: flex; gap: 36px; align-items: flex-start; }
-.toc-side { width: 230px; flex-shrink: 0; position: sticky; top: 24px; max-height: calc(100vh - 48px); overflow-y: auto; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 18px 18px 14px; }
+/* Floating left TOC — pinned far left */
+.layout { display: flex; gap: 36px; align-items: flex-start; justify-content: center; }
+.toc-side { width: 240px; flex-shrink: 0; position: fixed; left: max(16px, calc((100vw - 1280px) / 2 + 8px)); top: 140px; max-height: calc(100vh - 170px); overflow-y: auto; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 18px 18px 14px; z-index: 5; }
 .toc-side .toc-title { margin-bottom: 12px; }
 .toc-side ol { list-style: none; margin: 0; padding: 0; }
 .toc-side li { margin: 0; padding: 0; }
 .toc-side a { display: block; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.02em; color: var(--text2); text-decoration: none; padding: 6px 8px; border-left: 2px solid transparent; border-bottom: none; line-height: 1.5; }
 .toc-side a:hover { color: var(--accent); border-bottom: none; }
 .toc-side a.active { color: var(--accent); border-left-color: var(--accent); background: var(--glow); border-radius: 0 3px 3px 0; }
-.article-col { flex: 1; min-width: 0; max-width: 680px; }
+.article-col { flex: 1; min-width: 0; max-width: 680px; margin-left: 280px; }
 .toc-toggle { display: none; width: 100%; background: var(--bg2); border: 1px solid var(--border2); color: var(--text2); font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px 14px; border-radius: 3px; cursor: pointer; margin-bottom: 16px; }
+@media (max-width: 1150px) {
+  .toc-side { position: sticky; top: 24px; left: auto; max-height: calc(100vh - 48px); }
+  .article-col { margin-left: 0; }
+}
 @media (max-width: 900px) {
   .layout { display: block; }
   .toc-toggle { display: block; }
