@@ -156,86 +156,68 @@ footer { border-top: 1px solid var(--border); padding: 24px 0 52px; display: fle
 <p>Light falls on a <strong>sensor</strong> present in a camera / phone which consists of a grid of pixels. The light-sensitive element on a pixel cannot detect colour — only <strong>intensity</strong>.</p>
 <p>To calculate the RGB values of each pixel, the camera mostly uses a <strong>Bayer filter</strong>. This Bayer filter places an R, G, or B filter on top of each pixel, helping to detect the value of one particular colour. The missing two colour values are estimated using adjacent pixels through <strong>demosaicing</strong>.</p>
 <p>The Bayer filter pattern uses <strong>two green pixels for every red and blue pixel</strong>, because the human eye is more sensitive to green than to other wavelengths. The Bayer filter requires only one filter sensor per pixel, rather than needing separate sensors for each colour channel. Digital cameras then use demosaicing algorithms to convert this colour mosaic into an equally sized mosaic of true colours, effectively reconstructing the full RGB information at every pixel location.</p>
-<figure><img src="images/digital-image-fundamentals/fig1-p0.png" alt="Capture overview"><figcaption>Figure 1 — Capture overview: sensor → Bayer filter (2G:1R:1B) → demosaicing → full colour.</figcaption></figure>
-<blockquote>Key takeaway: each photosite measures one colour; full RGB at every pixel is <em>reconstructed</em>.</blockquote>
+<figure><img src="images/digital-image-fundamentals/fig1-p0.png" alt="Capture overview"><figcaption>Figure 1: Capture overview: light falls on the sensor grid (intensity only); Bayer filter (2G:1R:1B); demosaicing estimates the missing two colours; R+G+B combine into full colour.</figcaption></figure>
 
 <h2 id="pixels">2. Pixels</h2>
-<p><strong>Pixel</strong>, short for <em>picture element</em>, represents a single point of light carrying colour and brightness information.</p>
-<ul>
-<li>For a <strong>greyscale</strong> image, each pixel has a value between <strong>0 and 255</strong>, representing the darkest and lightest parts of the image respectively.</li>
-<li><strong>Coloured</strong> images consist of three separate channels: <strong>red, green, and blue</strong>. The overall image is formed by combining these RGB channels into one consolidated image.</li>
-</ul>
+<p>Pixel, short for picture element, represents a single point of light carrying colour and brightness information. For a greyscale image, each pixel has a value between 0 and 255, representing the darkest and lightest parts of the image respectively. Coloured images consist of three separate channels: red, green, and blue. The overall image is formed by combining these RGB channels into one consolidated image, producing the final full-colour picture that we see.</p>
 
 <h2 id="resolution">3. Image Resolution</h2>
-<ul>
-<li>An image with <strong>28 × 28 pixels</strong> has a resolution of <strong>784 pixels</strong>.</li>
-<li><strong>Display resolution</strong> is the maximum that can fit on the full dimension of an image. Example: <code>800 × 600 = 480,000</code> pixels on a PC screen.</li>
-<li><strong>Pixel density</strong> determines the number of pixels per inch of image. The more pixels per unit width, the higher the clarity.</li>
-<li>Resolution is measured in <strong>pixels per inch (PPI)</strong>.</li>
-</ul>
-<blockquote>Pixel dimension = Length × PPI. More PPI leads to more information, detail, sharpness, and better quality.</blockquote>
-<figure><img src="images/digital-image-fundamentals/fig2-p1.png" alt="Resolution diagram"><figcaption>Figure 2 — Image resolution = width × height; display resolution = max pixels on screen; PPI = pixels per inch.</figcaption></figure>
-<figure><img src="images/digital-image-fundamentals/fig3-p1.png" alt="300 ppi vs 72 ppi"><figcaption>Figure 3 — Resolution comparison: 300 PPI vs 72 PPI. Same scene, far more detail at higher PPI.</figcaption></figure>
+<p>An image with 28 × 28 pixels has a resolution of 784 pixels. Display resolution is the maximum that can fit on the full dimension of an image. Example: 800 × 600 = 480,000 pixels on a PC screen.</p>
+<p>Pixel density determines the number of pixels per inch of image. The more pixels per unit width, the higher the clarity of the image. Resolution is measured in pixels per inch (PPI). The size of a pixel is determined by how much space it takes in a square inch. In these notes:</p>
+<blockquote>Pixel dimension = Length × PPI.</blockquote>
+<p>More PPI leads to more information, detail, sharpness, and better quality.</p>
+<figure><img src="images/digital-image-fundamentals/fig2-p1.png" alt="Resolution diagram"><figcaption>Figure 2: Image resolution, display resolution, and PPI. Key relationships: image resolution = width × height (total pixel count); display resolution = max pixels on screen (e.g. 800 × 600); pixel density (PPI) = pixels per inch of image.</figcaption></figure>
+<figure><img src="images/digital-image-fundamentals/fig3-p1.png" alt="300 ppi vs 72 ppi"><figcaption>Figure 3: Resolution comparison: 300 ppi versus 72 ppi (cloud detail).</figcaption></figure>
 <table><tr><th>Term</th><th>Meaning</th><th>Example</th></tr>
 <tr><td>Image resolution</td><td>width × height</td><td>28 × 28 = 784</td></tr>
 <tr><td>Display resolution</td><td>max pixels a screen can show</td><td>800 × 600 = 480,000</td></tr>
 <tr><td>Pixel density (PPI)</td><td>pixels per inch</td><td>300 PPI sharper than 72 PPI</td></tr></table>
 
 <h2 id="bitdepth">4. Bit Depth</h2>
-<p><strong>Bit depth</strong> refers to the number of bits used to represent colour or brightness information of a single pixel. In <strong>line art</strong>, where only two colours are required — 0 for black and 1 for white — <strong>one bit suffices</strong>.</p>
-<p>For greyscale images, <strong>8 bits = 1 byte</strong> per pixel. With 8 bits, we have <strong>2⁸ = 256 tonal levels</strong> — 256 distinct shades of grey from pure black to pure white.</p>
-<figure><img src="images/digital-image-fundamentals/fig4-p1.png" alt="Bit depth"><figcaption>Figure 4 — 1-bit (line art, 2¹ = 2 values) versus 8-bit greyscale (2⁸ = 256 values).</figcaption></figure>
+<p>Bit depth refers to the number of bits used to represent colour or brightness information of a single pixel in a digital image. Images are computed using the binary system. In line art, where only two colours are required — 0 for black and 1 for white — one bit suffices. However, bit depth gives a pixel more information than just two values, enabling richer tonal representation.</p>
+<p>For greyscale images, 8 bits equals 1 byte of data per pixel. When an image is converted to an 8-bit image, it contains 8 bits of information within each pixel. With 8 bits, we have 2<sup>8</sup> = 256 tonal levels, meaning the image can represent 256 distinct shades of grey ranging from pure black to pure white. This is a significant improvement over 1-bit images, which can only represent two values. The comparison between 1-bit and 8-bit images illustrates how bit depth directly affects the smoothness and detail in the final image.</p>
+<figure><img src="images/digital-image-fundamentals/fig4-p1.png" alt="Bit depth"><figcaption>Figure 4: Bit depth — 1-bit (line art, 2<sup>1</sup> = 2 values per pixel) versus 8-bit greyscale (2<sup>8</sup> = 256 values per pixel).</figcaption></figure>
 
 <h2 id="grayscale">5. Grayscale</h2>
-<p>Grayscale is the simplest model, representing colours using brightness <strong>0 (black) to 255 (white)</strong>. Used when <strong>shape, structure, and brightness</strong> matter more than colour. Uses less space and processes faster.</p>
-<p><strong>Applications:</strong></p>
+<p>Grayscale is the simplest model, which represents colours using the brightness range 0 (black) to 255 (white). Grayscale is used when shape, structure, and brightness matter more than colour representation.</p>
+<p>Grayscale uses less space and processes computations faster.</p>
+<p>Applications:</p>
 <ol>
-<li><strong>OCR and document scanning</strong> — more detail while keeping file size small.</li>
-<li><strong>Medical imaging and terrain mapping</strong> — more depth. 8-bit = 256 shades; 16-bit = 65,536 shades. 8-bit for general use, 16-bit for medical / remote sensing.</li>
+<li>Grayscale is used in OCR and document scanning because it captures more detail while keeping file size small.</li>
+<li>Grayscale provides more depth and is useful in medical imaging and terrain mapping. An 8-bit grayscale image shows 256 shades of grey, whereas a 16-bit image provides 65,536 shades. 8-bit is for general use cases, while 16-bit is for medical imaging and remote sensing.</li>
 </ol>
-<table><tr><th>Depth</th><th>Levels</th><th>Use</th></tr>
-<tr><td>1-bit</td><td>2</td><td>line art</td></tr>
-<tr><td>8-bit</td><td>256</td><td>general use</td></tr>
-<tr><td>16-bit</td><td>65,536</td><td>medical, remote sensing</td></tr></table>
 
 <h2 id="rgb">6. RGB</h2>
-<p>RGB uses <strong>additive colour mixing</strong>. Heavily used in screens. Based on a <strong>3D Cartesian system</strong>. Digital images are <strong>8 bits per channel</strong> = 256 values per channel:</p>
-<blockquote>R × G × B = 256³ = 16,777,216 colours. Example: (255, 0, 0) = pure red.</blockquote>
-<figure><img src="images/digital-image-fundamentals/fig5-p2.png" alt="RGB cube"><figcaption>Figure 5 — RGB colour cube: three axes (R, G, B), each 0–255.</figcaption></figure>
+<p>RGB uses additive colour mixing of the primary colours. It is heavily used in screens, leading to ubiquitous image processing. The RGB model is based on a 3D Cartesian system. Digital images are 8 bits per channel, meaning 2<sup>8</sup> = 256 values per channel. Therefore</p>
+<blockquote>R × G × B = 256<sup>3</sup> = 16,777,216 colours can be generated.</blockquote>
+<p>With 8 bits of information per channel we have 2<sup>8</sup> = 256 levels. For example, (255, 0, 0) corresponds to pure red.</p>
+<figure><img src="images/digital-image-fundamentals/fig5-p2.png" alt="RGB cube"><figcaption>Figure 5: RGB colour cube.</figcaption></figure>
 
 <h2 id="hsv">7. HSV (Hue, Saturation, Value)</h2>
-<p>HSV is more <strong>perceptually uniform</strong> than RGB — closer to how humans perceive colour.</p>
-<ul>
-<li><strong>Hue</strong> — type of colour, 0–360°: red 0°, yellow 60°, green 120°, cyan 180°, blue 240°, magenta 300°.</li>
-<li><strong>Saturation</strong> — intensity 0–100%. 0% = grey, 100% = pure colour.</li>
-<li><strong>Value</strong> — brightness 0–100%. 0% = black regardless of hue/saturation.</li>
-</ul>
-<p>HSV has an advantage over RGB for extracting grayscale information, since each channel can be separated.</p>
-<figure><img src="images/digital-image-fundamentals/fig6-p3.png" alt="HSV"><figcaption>Figure 6 — HSV: hue (0–360°), saturation (depth), value (brightness 0–100%).</figcaption></figure>
+<p>HSV is a way to represent colours that is more perceptually uniform for humans compared to RGB. It is closer to how humans perceive colours. Hue represents the type of colour, measured in degrees on a colour wheel from 0 to 360. For example: red = 0◦, yellow = 60◦, green = 120◦, cyan = 180◦, blue = 240◦, magenta = 300◦, red = 360◦.</p>
+<p>Saturation measures intensity, ranging from 0% to 100%. 0% represents grey and 100% represents pure colour. Higher saturation means more vibrant colour.</p>
+<p>Value represents brightness, ranging from 0% to 100%. 0% is pure black and 100% is full brightness of the hue. At 0% it becomes black regardless of hue and saturation. HSV has an advantage over RGB for extracting grayscale information from a colour image, since each band/channel can be separated in HSV.</p>
+<figure><img src="images/digital-image-fundamentals/fig6-p3.png" alt="HSV"><figcaption>Figure 6: HSV (Hue, Saturation, Value): hue selects the base colour on the wheel (0–360◦); saturation is the amount/depth of colour; value is the brightness (0–100%).</figcaption></figure>
 
 <h2 id="coords">8. Image Coordinates</h2>
-<ul>
-<li><strong>Origin (0, 0)</strong> — top-left corner.</li>
-<li><strong>X-axis</strong> — horizontal, left → right (column number).</li>
-<li><strong>Y-axis</strong> — vertical, top → bottom (row number).</li>
-</ul>
-<p>Pixel location is <code>(x, y)</code> with both starting from 0.</p>
-<figure><img src="images/digital-image-fundamentals/fig7-p3.png" alt="Coordinates"><figcaption>Figure 7 — Buffer/pixel coordinates. Origin (0, 0) top-left.</figcaption></figure>
-<blockquote>⚠️ Unlike maths class: <strong>y grows downwards</strong>.</blockquote>
+<p>Most image processing libraries and computer vision applications use a coordinate system that might feel slightly different from the Cartesian coordinates learned in mathematics. The standard convention is:</p>
+<p><strong>Origin (0, 0)</strong><br>The starting point is located at the top-left corner of the image.</p>
+<p><strong>X-axis</strong><br>This axis runs horizontally from left to right. The x-coordinate represents the column number.</p>
+<p><strong>Y-axis</strong><br>This axis runs vertically from top to bottom. The y-coordinate represents the row number.</p>
+<p>So, a pixel's location is typically specified by a pair of values (x, y), where x is the horizontal position (column) and y is the vertical position (row), both starting from 0.</p>
+<figure><img src="images/digital-image-fundamentals/fig7-p3.png" alt="Coordinates"><figcaption>Figure 7: Image coordinate system — buffer/pixel coordinates (integer). Used to identify the exact location of a pixel inside an image with coordinates (x, y). The origin (0, 0) is the top-left corner.</figcaption></figure>
+<p>Used to identify the exact location of a pixel inside an image. It tells where a pixel is located using coordinates (x, y), with the origin (0, 0) at the top-left corner.</p>
 
 <h2 id="intensity">9. Pixel Intensity</h2>
-<p><strong>Pixel intensity</strong> = sum, mean, or median intensity within a region of interest (ROI).</p>
-<ul>
-<li>Grayscale: intensity ∝ pixel value (0 = black, 255 = white).</li>
-<li>Colour: computed from RGB channels.</li>
-</ul>
-<p>Used for <strong>thresholding, segmentation, feature extraction</strong>. Mean = overall brightness; sum = total brightness; median = robust to noise.</p>
+<p>Pixel intensity refers to the sum, mean, or median intensity of pixels within a region of interest (ROI) in an image. In grayscale images, intensity is directly proportional to the pixel value (0 = black, 255 = white). In colour images, intensity can be computed from the RGB channels.</p>
+<p>Pixel intensity is a fundamental concept in image processing. It is used for tasks such as thresholding, segmentation, and feature extraction. The mean intensity of an image gives a measure of its overall brightness. The sum of all pixel intensities gives the total brightness. Median intensity is robust against noise.</p>
 
 <h2 id="ops">10. Image Operations</h2>
-<p>Geometric transformations deform the pixel grid and map it to the destination image.</p>
+<p>These geometric transformations of images do not change the image content but deform the pixel grid and map this deformed grid to the destination image.</p>
 
 <h3>10.1 Resize</h3>
-<p>Prefer <code>cv.INTER_AREA</code> for shrinking, <code>cv.INTER_CUBIC</code> / <code>cv.INTER_LINEAR</code> for zooming. Example: 800×600 → ×0.5 → 400×300 (480,000 → 120,000 px).</p>
+<p>Scaling is just resizing of the image. Preferable interpolation methods are cv.INTER_AREA for shrinking and cv.INTER_CUBIC (slow) and cv.INTER_LINEAR for zooming. Example: 800 × 600 → resize (×0.5) → 400 × 300; pixels: 480,000 → 120,000.</p>
+<p>The OpenCV signature is:</p>
 <pre><code>cv.resize(src, dsize[, dst[, fx[, fy[, interpolation]]]]) -&gt; dst</code></pre>
 <pre><code>import cv2 as cv
 img = cv.imread("messi5.jpg")
@@ -243,50 +225,56 @@ res = cv.resize(img, None, fx=2, fy=2, interpolation=cv.INTER_CUBIC)
 # OR
 height, width = img.shape[:2]
 res = cv.resize(img, (2*width, 2*height), interpolation=cv.INTER_CUBIC)</code></pre>
+<figcaption>Listing 1: Resizing with OpenCV</figcaption>
 
 <h3>10.2 Crop</h3>
-<p>Selecting a region, not resizing. No dedicated <code>crop()</code> — use NumPy slicing <code>image[y1:y2, x1:x2]</code>.</p>
-<pre><code># NumPy slicing: image[y1:y2, x1:x2]
+<p>Cropping means selecting only a particular region of an image and removing the rest. Cropping does not resize the selected content; it simply selects a region. There is no dedicated crop() function. OpenCV uses NumPy slicing: image[y1:y2, x1:x2].</p>
+<pre><code># NumPy slicing : image[y1:y2, x1:x2]
 ball = img[280:340, 330:390]</code></pre>
+<figcaption>Listing 2: Cropping with NumPy slicing</figcaption>
 
 <h3>10.3 Rotate</h3>
-<p>Parameters: centre, angle, scale. Positive angle = counter-clockwise.</p>
+<p>Rotation means turning an image around a particular point by a certain angle. Parameters: centre of rotation, angle, scale. A positive angle means counter-clockwise.</p>
 <pre><code>import cv2 as cv
 img = cv.imread("image.jpg")
 height, width = img.shape[:2]
 center = (width // 2, height // 2)
 matrix = cv.getRotationMatrix2D(center, 45, 1.0)
 rotated = cv.warpAffine(img, matrix, (width, height))</code></pre>
+<figcaption>Listing 3: Rotation with OpenCV</figcaption>
 
 <h3>10.4 Flip</h3>
+<p>Flipping creates a mirror-like transformation of an image.</p>
 <pre><code>import cv2 as cv
 horizontal = cv.flip(img, 1)  # Horizontal flip
 vertical = cv.flip(img, 0)    # Vertical flip
 both = cv.flip(img, -1)       # Both directions</code></pre>
+<figcaption>Listing 4: Flipping with OpenCV</figcaption>
 
 <h3>10.5 Translate</h3>
-<p>Shifting location.</p>
+<p>Translation is the shifting of an object's location.</p>
 <pre><code>import numpy as np
 import cv2 as cv
 M = np.float32([[1, 0, 100], [0, 1, 50]])
 dst = cv.warpAffine(img, M, (cols, rows))</code></pre>
+<figcaption>Listing 5: Translation with OpenCV</figcaption>
 
 <hr>
 <h2 id="refs">References</h2>
-<ol style="font-size:0.9rem; color: var(--text2);">
-<li>Bayer filter: <a href="https://www.whatdigitalcamera.com/technology_guides/bayer-filter-work-60461">whatdigitalcamera.com</a></li>
-<li>Demosaicing: <a href="https://en.wikipedia.org/wiki/Demosaicing">Wikipedia</a></li>
-<li>Pixel, Bit depth: <a href="https://graphics-pro.com/feature/the-anatomy-of-a-pixel/">graphics-pro.com</a></li>
-<li>Resolution, Bits and Channels: <a href="https://blogs.ubc.ca/visa110/files/2017/06/ResolutionBitsChannels.pdf">UBC PDF</a></li>
-<li>Pixel density: <a href="https://medium.com/conspectushub/digital-image-representation-inside-a-computer-3481f87d348c">Medium</a></li>
-<li>Grayscale: <a href="https://www.lenovo.com/us/en/glossary/grayscale/">Lenovo glossary</a></li>
-<li>RGB: <a href="https://vincmazet.github.io/bip/digital-images/color-models/">vincmazet.github.io</a></li>
-<li>HSV: <a href="https://zenn.dev/yuto_mo/articles/2f4e8168cc817f">zenn.dev</a></li>
-<li>HSV image: <a href="https://medium.com/@dijdomv01/a-beginners-guide-to-understand-the-color-models-rgb-and-hsv-244226e4b3e3">Medium</a></li>
-<li>Image coordinate system: <a href="https://apxml.com/courses/introduction-to-computer-vision/chapter-2-digital-image-fundamentals/image-coordinate-systems">apxml.com</a></li>
-<li>Geometric transformations: <a href="https://docs.opencv.org/4.13.0/da/d6e/tutorial_py_geometric_transformations.html">OpenCV docs</a></li>
-<li>Crop/ROI: <a href="https://docs.opencv.org/4.12.0/d3/df2/tutorial_py_basic_ops.html">OpenCV docs</a></li>
-<li>Flip: <a href="https://docs.opencv.org/4.5.4/d2/de8/group__core__array.html">OpenCV docs</a></li>
+<ol style="font-size:0.9rem; color: var(--text2); word-break: break-all;">
+<li>Bayer filter: <a href="https://www.whatdigitalcamera.com/technology_guides/bayer-filter-work-60461">https://www.whatdigitalcamera.com/technology_guides/bayer-filter-work-60461</a></li>
+<li>Demosaicing: <a href="https://en.wikipedia.org/wiki/Demosaicing">https://en.wikipedia.org/wiki/Demosaicing</a></li>
+<li>Pixel, Bit depth: <a href="https://graphics-pro.com/feature/the-anatomy-of-a-pixel/">https://graphics-pro.com/feature/the-anatomy-of-a-pixel/</a></li>
+<li>Resolution, Bits and Channels: <a href="https://blogs.ubc.ca/visa110/files/2017/06/ResolutionBitsChannels.pdf">https://blogs.ubc.ca/visa110/files/2017/06/ResolutionBitsChannels.pdf</a></li>
+<li>Pixel density, image resolution: <a href="https://medium.com/conspectushub/digital-image-representation-inside-a-computer-3481f87d348c">https://medium.com/conspectushub/digital-image-representation-inside-a-computer-3481f87d348c</a></li>
+<li>Grayscale: <a href="https://www.lenovo.com/us/en/glossary/grayscale/?utm_source=chatgpt.com">https://www.lenovo.com/us/en/glossary/grayscale/?utm_source=chatgpt.com</a></li>
+<li>RGB: <a href="https://vincmazet.github.io/bip/digital-images/color-models/?utm_source=chatgpt.com">https://vincmazet.github.io/bip/digital-images/color-models/?utm_source=chatgpt.com</a></li>
+<li>HSV: <a href="https://zenn.dev/yuto_mo/articles/2f4e8168cc817f">https://zenn.dev/yuto_mo/articles/2f4e8168cc817f</a></li>
+<li>HSV image: <a href="https://medium.com/@dijdomv01/a-beginners-guide-to-understand-the-color-models-rgb-and-hsv-244226e4b3e3">https://medium.com/@dijdomv01/a-beginners-guide-to-understand-the-color-models-rgb-and-hsv-244226e4b3e3</a></li>
+<li>Image co-ordinate system: <a href="https://apxml.com/courses/introduction-to-computer-vision/chapter-2-digital-image-fundamentals/image-coordinate-systems">https://apxml.com/courses/introduction-to-computer-vision/chapter-2-digital-image-fundamentals/image-coordinate-systems</a></li>
+<li>Resize, Translate, Rotate (geometric transformations): <a href="https://docs.opencv.org/4.13.0/da/d6e/tutorial_py_geometric_transformations.html">https://docs.opencv.org/4.13.0/da/d6e/tutorial_py_geometric_transformations.html</a></li>
+<li>Crop/ROI via NumPy slicing: <a href="https://docs.opencv.org/4.12.0/d3/df2/tutorial_py_basic_ops.html">https://docs.opencv.org/4.12.0/d3/df2/tutorial_py_basic_ops.html</a></li>
+<li>Flip (flipCode): <a href="https://docs.opencv.org/4.5.4/d2/de8/group__core__array.html">https://docs.opencv.org/4.5.4/d2/de8/group__core__array.html</a></li>
 </ol>
 
 </div>
