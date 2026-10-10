@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Image Processing Techniques · Arun Varma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Spectral:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"] {
+  --bg: #0f0f0d; --bg2: #161613; --bg3: #1c1c18;
+  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.14);
+  --text: #d4cfc4; --text2: #7a7770; --text3: #3f3e3c;
+  --accent: #b8a96a; --accent2: #c97b5a; --glow: rgba(184,169,106,0.05);
+}
+:root[data-theme="light"] {
+  --bg: #ffffff; --bg2: #f0ede6; --bg3: #e8e4db;
+  --border: rgba(0,0,0,0.07); --border2: rgba(0,0,0,0.14);
+  --text: #000000; --text2: #333333; --text3: #555555;
+  --accent: #8a6820; --accent2: #b8502e; --glow: rgba(138,104,32,0.06);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Spectral', Georgia, serif; font-weight: 400; min-height: 100vh; transition: background 0.35s ease, color 0.35s ease; -webkit-font-smoothing: antialiased; }
+body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+.wrap-narrow { max-width: 680px; margin: 0 auto; }
+header { padding: 60px 0 36px; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
+.brand-name { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 500; font-style: italic; color: var(--accent); line-height: 1; letter-spacing: -0.02em; }
+.brand-sub { font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 300; color: var(--text2); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 7px; }
+.brand-sub em { font-style: normal; color: var(--accent2); }
+.toggle-btn { background: none; border: 1px solid var(--border2); color: var(--text2); font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 7px 13px; border-radius: 2px; cursor: pointer; transition: all 0.25s; flex-shrink: 0; margin-bottom: 4px; }
+.toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+nav { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); display: flex; align-items: center; margin-bottom: 48px; padding: 1px 0; }
+nav a { font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); text-decoration: none; padding: 10px 16px 10px 0; transition: color 0.2s; }
+nav a:not(:first-child) { padding-left: 16px; border-left: 1px solid var(--border); }
+nav a:hover, nav a.active { color: var(--text); }
+nav .ext { font-size: 0.5rem; vertical-align: super; margin-left: 2px; opacity: 0.5; }
+.post-header { margin-bottom: 32px; }
+.post-header .post-title { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; font-style: italic; color: var(--text); line-height: 1.25; margin-bottom: 14px; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1.5px; text-decoration-color: var(--accent); }
+.post-header .post-meta { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--text3); letter-spacing: 0.08em; }
+.post-tag { font-family: 'DM Mono', monospace; font-size: 0.58rem; font-style: italic; color: var(--accent); }
+.post-content { font-family: 'Spectral', serif; font-size: 1.05rem; font-weight: 400; line-height: 1.85; color: var(--text); }
+.post-content h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; font-style: italic; margin: 36px 0 16px; padding-bottom: 6px; border-bottom: 1.5px solid var(--border); }
+.post-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; font-style: italic; margin: 28px 0 12px; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; text-decoration-color: var(--text3); }
+.post-content h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; margin: 24px 0 10px; color: var(--text); }
+.post-content p { margin-bottom: 18px; }
+.post-content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+.post-content a:hover { border-bottom-color: var(--accent); }
+.post-content code { font-family: 'DM Mono', monospace; font-size: 0.82em; background: var(--bg2); padding: 2px 6px; border-radius: 2px; color: var(--accent2); }
+.post-content pre { background: var(--bg2); border: 1px solid var(--border); border-radius: 2px; padding: 18px 20px; overflow-x: auto; margin: 20px 0; font-size: 0.78rem; line-height: 1.7; }
+.post-content pre code { background: none; padding: 0; color: var(--text); font-size: inherit; }
+.post-content blockquote { border-left: 2px solid var(--accent); margin: 20px 0; padding: 10px 22px; color: var(--text2); font-style: italic; background: var(--bg2); border-radius: 0 2px 2px 0; }
+.post-content img { max-width: 100%; border-radius: 2px; margin: 24px 0 8px; border: 1px solid var(--border); }
+.post-content figure { margin: 0 0 20px; }
+.post-content figcaption { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--text3); line-height: 1.6; margin-bottom: 12px; }
+.post-content ul, .post-content ol { margin: 14px 0 14px 22px; }
+.post-content li { margin-bottom: 6px; }
+.post-content hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+.post-content table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.85rem; }
+.post-content th, .post-content td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+.post-content th { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); background: var(--bg2); }
+.toc { background: var(--bg2); border: 1px solid var(--border); border-radius: 2px; padding: 18px 22px; margin: 24px 0 32px; }
+.toc-title { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; }
+.toc ol { margin: 0 0 0 18px; font-size: 0.9rem; line-height: 1.9; }
+.toc a { color: var(--text2); text-decoration: none; }
+.toc a:hover { color: var(--accent); }
+/* Floating left TOC — pinned far left */
+.layout { display: flex; gap: 36px; align-items: flex-start; justify-content: center; }
+.toc-side { width: 240px; flex-shrink: 0; position: fixed; left: max(16px, calc((100vw - 1280px) / 2 + 8px)); top: 140px; max-height: calc(100vh - 170px); overflow-y: auto; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 18px 18px 14px; z-index: 5; }
+.toc-side .toc-title { margin-bottom: 12px; }
+.toc-side ol { list-style: none; margin: 0; padding: 0; }
+.toc-side li { margin: 0; padding: 0; }
+.toc-side a { display: block; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.02em; color: var(--text2); text-decoration: none; padding: 6px 8px; border-left: 2px solid transparent; border-bottom: none; line-height: 1.5; }
+.toc-side a:hover { color: var(--accent); border-bottom: none; }
+.toc-side a.active { color: var(--accent); border-left-color: var(--accent); background: var(--glow); border-radius: 0 3px 3px 0; }
+.article-col { flex: 1; min-width: 0; max-width: 680px; margin-left: 280px; }
+.toc-toggle { display: none; width: 100%; background: var(--bg2); border: 1px solid var(--border2); color: var(--text2); font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px 14px; border-radius: 3px; cursor: pointer; margin-bottom: 16px; }
+@media (max-width: 1150px) {
+  .toc-side { position: sticky; top: 24px; left: auto; max-height: calc(100vh - 48px); }
+  .article-col { margin-left: 0; }
+}
+@media (max-width: 900px) {
+  .layout { display: block; }
+  .toc-toggle { display: block; }
+  .toc-side { display: none; width: 100%; position: static; max-height: none; margin-bottom: 20px; }
+  .toc-side.open { display: block; }
+  .article-col { max-width: 100%; }
+}
+.back-link { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); text-decoration: none; margin-top: 48px; padding: 6px 0; }
+.back-link:hover { color: var(--accent); }
+footer { border-top: 1px solid var(--border); padding: 24px 0 52px; display: flex; justify-content: space-between; align-items: center; margin-top: 52px; }
+.foot-copy { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text3); letter-spacing: 0.08em; }
+.foot-links { display: flex; gap: 18px; }
+.foot-links a { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); text-decoration: none; }
+.foot-links a:hover { color: var(--accent); }
+@media (max-width: 520px) { .wrap { padding: 0 18px; } header { padding: 40px 0 28px; flex-direction: column; align-items: flex-start; gap: 14px; } .brand-name { font-size: 2.4rem; } footer { flex-direction: column; gap: 12px; align-items: flex-start; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="wrap-narrow">
+<header>
+  <div>
+    <a href="index.html" style="text-decoration:none">
+      <div class="brand-name">Arun.</div>
+      <div class="brand-sub">ml engineer &amp;&amp; <em>data science student</em></div>
+    </a>
+  </div>
+  <button class="toggle-btn" id="theme-btn" onclick="toggleTheme()">☾ dark</button>
+</header>
+
+<nav>
+  <a href="index.html">about</a>
+  <a href="projects.html">projects</a>
+  <a href="writing.html" class="active">writing</a>
+  <a href="daily.html">daily</a>
+  <a href="index.html#skills">skills</a>
+  <a href="https://github.com/Arun2565" target="_blank">github <span class="ext">↗</span></a>
+  <a href="https://x.com/ArunVarma479327" target="_blank">twitter <span class="ext">↗</span></a>
+  <a href="https://arunvarma1.substack.com" target="_blank">substack <span class="ext">↗</span></a>
+</nav>
+</div>
+
+<div class="layout">
+<aside class="toc-side" id="toc-side">
+<div class="toc-title">Contents</div>
+<ol>
+<li><a href="#enhancement">1 · Enhancement</a></li>
+<li><a href="#brightness">2 · Brightness</a></li>
+<li><a href="#contrast">3 · Contrast</a></li>
+<li><a href="#histogram">4 · Histogram Equalization</a></li>
+<li><a href="#filtering">5 · Filtering</a></li>
+<li><a href="#edges">6 · Edge Detection</a></li>
+<li><a href="#thresholding">7 · Thresholding</a></li>
+<li><a href="#morphology">8 · Morphology</a></li>
+<li><a href="#refs">References</a></li>
+</ol>
+</aside>
+
+<div class="article-col">
+<button class="toc-toggle" onclick="document.getElementById('toc-side').classList.toggle('open')">☰ Contents</button>
+<article>
+<header class="post-header">
+  <h1 class="post-title">Digital Image Processing Techniques</h1>
+  <div class="post-meta">2026 10 10 · <span class="post-tag">guide</span> · image-processing, enhancement, filtering, segmentation</div>
+</header>
+
+<div class="post-content">
+<p>A practical guide to the core image-processing toolkit — enhancement, brightness and contrast, histogram equalization, spatial filtering, edge detection, thresholding, and morphological operations — the second week of the Digital Image Processing notes. Each technique is paired with the figures from the notes so the intuition lands before the math.</p>
+
+<h2 id="enhancement">1. Enhancement</h2>
+<p>Image enhancement is a fundamental area in digital image processing focused on improving the visual appearance of an image. Real-world images often suffer from issues such as low contrast, noise, blur, poor lighting, and loss of detail. These degradations negatively impact both human perception and computer vision applications such as object detection, medical diagnosis, and surveillance.</p>
+
+<h2 id="brightness">2. Brightness</h2>
+<p>Image brightness (or luminous brightness) is a measure of intensity after the image has been acquired with a digital camera or digitized by an analog-to-digital converter. The color of light sources can vary greatly and consequently affect the way colors are perceived in a photograph. Most modern cameras come equipped with automatic white balance settings, but a deeper understanding of this process empowers photographers to manually make adjustments for superior results.</p>
+
+<h2 id="contrast">3. Contrast</h2>
+<p>Contrast refers to the amount of color or grayscale differentiation that exists between various image features in both analog and digital images. Images having a higher contrast level generally display a greater degree of color or grayscale variation than those of lower contrast.</p>
+<p>There are two types of contrast that matter in practice:</p>
+<ul>
+<li><strong>Luminance contrast</strong> refers to differences in brightness, and it carries most of the visual information you use to perceive patterns, depth, and motion.</li>
+<li><strong>Color contrast</strong> (sometimes called chromatic contrast) refers to differences in hue or saturation. Color channels in your visual system don't convey fine detail the way brightness does, but they're just as effective for making large shapes and areas stand out from one another.</li>
+</ul>
+<p>That's why a red button on a green background pops even if both colors are similar in brightness, yet small red text on a green background of the same brightness can be nearly impossible to read.</p>
+
+<h2 id="histogram">4. Histogram Equalization</h2>
+<p>Histogram equalization is a simple technique to enhance a digital image. It is especially effective in improving the visual quality of grayscale images. Histogram equalization has been applied extensively in medical imaging to improve the contrast of X-ray and MRI images. Histograms serve as graphical illustrations of the tonal distribution within an image. They provide insights into the number of pixels at each level of brightness present in the picture, thereby assisting photographers in comprehending the photo's exposure and contrast. By utilizing histogram manipulation techniques, photographers can greatly enhance images that initially display poor contrast. These methods empower them to fine-tune the brightness and contrast, thus elevating the overall quality of the photograph. A histogram represents the frequency distribution of data. It is usually visualized as a bar plot.</p>
+<p>Histogram equalization improves contrast by redistributing pixel intensity values across the entire histogram.</p>
+<figure><img src="images/digital-image-processing-techniques/fig1-histogram-eq.png" alt="Histogram equalization"><figcaption>Figure 1: Histogram equalization. The original image (right) has its intensities clustered in a narrow mid-tone band; after equalization (left) the histogram is spread across the full 0–255 range, producing a higher-contrast image.</figcaption></figure>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Computes the histogram of the image</li>
+<li>Converts it to a Probability Density Function</li>
+<li>Creates a Cumulative Distribution Function</li>
+<li>Remaps each pixel to a new intensity using this CDF</li>
+</ol>
+
+<h2 id="filtering">5. Filtering</h2>
+<p>Filtering is the process used to form a new image whose pixel values are a combination of the original pixel values. Filters are used to enhance or modify an image by altering the values of its pixels. They can be used to smooth an image, remove noise, sharpen edges, or extract specific features — modifying the pixels in an image based on some function of a local neighborhood of each pixel.</p>
+<figure><img src="images/digital-image-processing-techniques/fig2-filter-concept.png" alt="Filtering concept"><figcaption>Figure 2: The general filtering idea — take a local neighborhood of pixels, apply some function, and write the single result to the center pixel of the output.</figcaption></figure>
+
+<h4>5.1 Mean Filter</h4>
+<p>The mean filter is a linear filter that smooths an image by replacing each pixel with the average of its neighboring pixels. It is commonly used to remove noise from images, but can also blur the image and reduce image detail.</p>
+<figure><img src="images/digital-image-processing-techniques/fig3-mean-filter.png" alt="Mean filter"><figcaption>Figure 3: Mean filter on a 3×3 neighborhood — the center pixel (37) is replaced by the average of its nine neighbors, 347 / 9 ≈ 38.55, rounded to 39.</figcaption></figure>
+
+<h4>5.2 Gaussian Filter</h4>
+<p>Gaussian smoothing is a popular image-processing technique used to reduce noise and blur an image by convolving it with a Gaussian kernel. This filter is a 2-D convolutional operator, but the main difference is that a Gaussian filter uses a kernel which has the shape of a Gaussian hump. The Gaussian kernel weights pixels at its center much more strongly than at its boundaries, giving more weight to nearby pixels and less weight to distant pixels, creating a smoother and more natural-looking image. It is commonly used in computer vision, image processing, and signal processing applications.</p>
+<figure><img src="images/digital-image-processing-techniques/fig4-gaussian-kernel.png" alt="Gaussian kernels"><figcaption>Figure 4: Discrete Gaussian kernels — a 3×3 kernel (normalized 1/16) and a 5×5 kernel. The larger kernel covers a wider neighborhood and therefore smooths more heavily.</figcaption></figure>
+
+<h4>5.3 Median Filter</h4>
+<p>The median filter is a non-linear filter that replaces each pixel with the median value of its local neighborhood. It is commonly used to remove salt and pepper noise from images while preserving image detail and sharpness.</p>
+<figure><img src="images/digital-image-processing-techniques/fig5-median-filter.png" alt="Median filter"><figcaption>Figure 5: Median filter on a 3×3 window — the nine neighborhood values are sorted and the center pixel (40) is replaced by the median, 41.</figcaption></figure>
+<figure><img src="images/digital-image-processing-techniques/fig6-median-denoise.png" alt="Median filter denoising"><figcaption>Figure 6: Median filtering of salt-and-pepper noise — the impulse noise is removed while edges and fine detail are preserved, which is why the median is preferred over the mean for this kind of noise.</figcaption></figure>
+
+<h2 id="edges">6. Edge Detection</h2>
+<p>Edge detection is an image-processing technique used to identify points in a digital image where the image brightness changes sharply or, more formally, has discontinuities. These points are organized into a set of curved line segments termed edges. Edges are significant local changes of intensity in an image, and they usually occur on the boundary between two different regions.</p>
+<p>Edge-based segmentation is a technique used in image processing to identify and separate the edges of an image from the background. The method involves detecting the abrupt changes in intensity or color values of the pixels in the image and using them to mark the boundaries of the objects.</p>
+
+<h4>6.1 Sobel Edge Detection</h4>
+<p>Sobel edge detection is a method for edge detection that uses a gradient-based approach to detect edges in an image. The method involves computing the gradient magnitude and direction of the image using a <strong>Sobel operator</strong>, which is a convolution kernel that extracts horizontal and vertical edge information separately. It uses two 3×3 kernels which are convolved with the original image to calculate the approximations of the derivatives — one for horizontal changes, and one for vertical.</p>
+<figure><img src="images/digital-image-processing-techniques/fig7-sobel-mechanism.png" alt="Sobel mechanism"><figcaption>Figure 7: The Sobel mechanism — the Gx kernel (left) computes the horizontal gradient; G and Gy are combined via G = √(Gx² + Gy²) to get the total edge magnitude, independent of direction.</figcaption></figure>
+<figure><img src="images/digital-image-processing-techniques/fig8-sobel-example.png" alt="Sobel edge detection example"><figcaption>Figure 8: Example of Sobel edge detection — the tiger photograph (left) and its Sobel edge image (right), where contours, stripes, and texture appear as bright lines on black.</figcaption></figure>
+
+<h4>6.2 Canny Edge Detection</h4>
+<p>Canny Edge Detection is a multi-stage algorithm to detect a wide range of edges in images. It was developed by John F. Canny in 1986 and is known for its optimal edge detection capabilities. The algorithm follows a series of steps to reduce noise, detect edges, and improve the accuracy of edge detection.</p>
+<table>
+<tr><th></th><th>Strengths</th><th>Weaknesses</th></tr>
+<tr><td>Canny</td><td>Thin, clean edges; robust to noise</td><td>Computationally more expensive; requires parameter tuning (thresholds)</td></tr>
+</table>
+<figure><img src="images/digital-image-processing-techniques/fig9-canny-workflow.png" alt="Canny workflow"><figcaption>Figure 9: The Canny workflow — (1) Gaussian smoothing, (2) gradient calculation via Sobel, (3) non-maximum suppression to thin edges, (4) hysteresis thresholding with T<sub>high</sub> / T<sub>low</sub> to track and keep connected edges.</figcaption></figure>
+<figure><img src="images/digital-image-processing-techniques/fig10-canny-example.png" alt="Canny edge detection example"><figcaption>Figure 10: Example of Canny edge detection — the coins (left) and the resulting edge image (right), where only object boundaries and internal detail survive.</figcaption></figure>
+
+<h2 id="thresholding">7. Thresholding</h2>
+<p>Thresholding is one of the simplest image segmentation methods. Here, the pixels are divided into classes based on their histogram intensity which is relative to a fixed value or threshold. This method is suitable for segmenting objects where the difference in pixel values between the two target classes is significant. In low-noise images, the threshold value can be kept constant, but with images with noise, dynamic thresholding performs better. In thresholding-based segmentation, the greyscale image is divided into two segments based on their relationship to the threshold value, producing binary images. Algorithms like contour detection and identification work on these binarized images. The two commonly used thresholding methods are:</p>
+
+<h4>7.1 Global Thresholding</h4>
+<p>Global thresholding is a technique used in image segmentation to divide images into foreground and background regions based on pixel intensity values. A threshold value is chosen to separate the two regions, and pixels with intensity values above the threshold are assigned to the foreground region and those below the threshold to the background region. This method is simple and efficient but may not work well for images with varying illumination or contrast. In those cases, adaptive thresholding techniques may be more appropriate.</p>
+
+<h4>7.2 Adaptive Thresholding</h4>
+<p>Adaptive thresholding is a technique used in image segmentation to divide an image into foreground and background regions by adjusting the threshold value locally based on the image characteristics. The method involves selecting a threshold value for each smaller region or block, based on the statistics of the pixel values within that block. Adaptive thresholding is useful for images with non-uniform illumination or varying contrast and is commonly used in document scanning, image binarization, and image segmentation. The choice of adaptive thresholding technique depends on the specific application requirements and image characteristics.</p>
+<figure><img src="images/digital-image-processing-techniques/fig11-thresholding.png" alt="Thresholding techniques"><figcaption>Figure 11: Different thresholding techniques. Under non-uniform illumination (top-left), global thresholding (v = 127) loses detail in the dark and bright regions, while adaptive mean and adaptive Gaussian thresholding recover the full structure by computing a local threshold.</figcaption></figure>
+
+<h2 id="morphology">8. Morphology</h2>
+<p>Morphology is a broad set of image-processing operations that process images based on shapes. Morphological operations apply a structuring element to an input image, creating an output image of the same size. In a morphological operation, the value of each pixel in the output image is based on a comparison of the corresponding pixel in the input image with its neighbors.</p>
+
+<h4>8.1 Erosion</h4>
+<p>The value of the output pixel is the minimum value of all pixels in the neighborhood. In a binary image, a pixel is set to 0 if any of the neighboring pixels have the value 0. Morphological erosion removes floating pixels and thin lines so that only substantive objects remain. Remaining lines appear thinner and shapes appear smaller.</p>
+<figure><img src="images/digital-image-processing-techniques/fig12-erosion.png" alt="Erosion"><figcaption>Figure 12: Erosion (right) shrinks the white regions — the middle square, the hollow circle, and the cross are removed, while larger solid objects survive.</figcaption></figure>
+
+<h4>8.2 Dilation</h4>
+<p>The value of the output pixel is the maximum value of all pixels in the neighborhood. In a binary image, a pixel is set to 1 if any of the neighboring pixels have the value 1. Morphological dilation makes objects more visible and fills in small holes in objects. Lines appear thicker, and filled shapes appear larger.</p>
+<figure><img src="images/digital-image-processing-techniques/fig13-dilation.png" alt="Dilation"><figcaption>Figure 13: Dilation (right) expands the white regions — boundaries thicken, filled shapes grow, and thin lines become bolder.</figcaption></figure>
+
+<h4>8.3 Opening</h4>
+<p>The opening operation erodes an image and then dilates the eroded image, using the same structuring element for both operations. Morphological opening is useful for removing small objects and thin lines from an image while preserving the shape and size of larger objects. This operation is normally used with binary images but can also be extended to grayscale images. In short: <strong>opening is erosion followed by dilation.</strong></p>
+
+<h4>8.4 Closing</h4>
+<p>The closing operation dilates an image and then erodes the dilated image, using the same structuring element for both operations. Morphological closing is useful for filling small holes in an image while preserving the shape and size of large holes and objects.</p>
+<figure><img src="images/digital-image-processing-techniques/fig14-opening-closing.png" alt="Opening and closing"><figcaption>Figure 14: Opening and closing on a chain-like shape — opening removes thin connecting segments and isolated protrusions, while closing fills small gaps between them, in both cases preserving the large structures.</figcaption></figure>
+
+<hr>
+<h2 id="refs">References</h2>
+<ol style="font-size:0.9rem; color: var(--text2); word-break: break-all;">
+<li>Enhancement: <a href="https://medium.com/@prajakta.dhole22/image-enhancement-techniques-in-digital-image-processing-b0cd4f957290">https://medium.com/@prajakta.dhole22/image-enhancement-techniques-in-digital-image-processing-b0cd4f957290</a></li>
+<li>Brightness: <a href="https://medium.com/@flcamarao/image-processing-image-enhancements-f39e1a321081">https://medium.com/@flcamarao/image-processing-image-enhancements-f39e1a321081</a></li>
+<li>Contrast: <a href="https://evidentscientific.com/en/microscope-resource/tutorials/evidentmicd/digitalimaging/contrast">https://evidentscientific.com/en/microscope-resource/tutorials/evidentmicd/digitalimaging/contrast</a></li>
+<li>Contrast: <a href="https://scienceinsights.org/what-is-image-contrast-and-how-does-it-work/">https://scienceinsights.org/what-is-image-contrast-and-how-does-it-work/</a></li>
+<li>Histogram: <a href="https://levelup.gitconnected.com/introduction-to-histogram-equalization-for-digital-image-enhancement-420696db9e43">https://levelup.gitconnected.com/introduction-to-histogram-equalization-for-digital-image-enhancement-420696db9e43</a></li>
+<li>Histogram: <a href="https://medium.com/@prajakta.dhole22/image-enhancement-techniques-in-digital-image-processing-b0cd4f957290">https://medium.com/@prajakta.dhole22/image-enhancement-techniques-in-digital-image-processing-b0cd4f957290</a></li>
+<li>Filtering: <a href="https://medium.com/@wilson.linzhe/digital-image-processing-in-c-chapter-1-mean-and-median-filter-b4c4d0775e14">https://medium.com/@wilson.linzhe/digital-image-processing-in-c-chapter-1-mean-and-median-filter-b4c4d0775e14</a></li>
+<li>Filtering: <a href="https://www.scaler.com/topics/filtering-in-image-processing/#gaussian-filter">https://www.scaler.com/topics/filtering-in-image-processing/#gaussian-filter</a></li>
+<li>Filtering: <a href="https://www.cs.cornell.edu/courses/cs5670/2022sp/lectures/lec01_filter_for_web.pdf">https://www.cs.cornell.edu/courses/cs5670/2022sp/lectures/lec01_filter_for_web.pdf</a></li>
+<li>Edge detection: <a href="https://blog.roboflow.com/edge-detection/">https://blog.roboflow.com/edge-detection/</a></li>
+<li>Edge detection: <a href="https://medium.com/@global.himani26/edge-detection-in-computer-vision-a-comprehensive-guide-with-python-e1dc846accd9">https://medium.com/@global.himani26/edge-detection-in-computer-vision-a-comprehensive-guide-with-python-e1dc846accd9</a></li>
+<li>Edge detection: <a href="https://encord.com/blog/image-segmentation-for-computer-vision-best-practice-guide/">https://encord.com/blog/image-segmentation-for-computer-vision-best-practice-guide/</a></li>
+<li>Thresholding: <a href="https://encord.com/blog/image-segmentation-for-computer-vision-best-practice-guide/">https://encord.com/blog/image-segmentation-for-computer-vision-best-practice-guide/</a></li>
+<li>Thresholding: <a href="https://medium.com/@aryanrusia8/thresholding-in-image-processing-understanding-global-otsu-and-adaptive-methods-d8ff312b3fa6">https://medium.com/@aryanrusia8/thresholding-in-image-processing-understanding-global-otsu-and-adaptive-methods-d8ff312b3fa6</a></li>
+<li>Morphology: Erosion, Dilation, Opening, Closing</li>
+<li>Article: <em>“Fundamental Image Enhancement, Filtering and Segmentation Techniques”</em></li>
+<li>Filtering figures: <a href="https://medium.com/@shashikadilhani97/digital-image-processing-filters-832ec6d18a73">https://medium.com/@shashikadilhani97/digital-image-processing-filters-832ec6d18a73</a></li>
+</ol>
+
+</div>
+<a href="writing.html" class="back-link">← back to writing</a>
+</article>
+</div><!-- /article-col -->
+</div><!-- /layout -->
+
+<div class="wrap-narrow">
+<footer>
+  <div class="foot-copy">© 2026 Arun · Hyderabad, India</div>
+  <div class="foot-links">
+    <a href="https://github.com/Arun2565" target="_blank">GitHub</a>
+    <a href="https://x.com/ArunVarma479327" target="_blank">Twitter</a>
+    <a href="https://arunvarma1.substack.com" target="_blank">Substack</a>
+  </div>
+</footer>
+
+</div>
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('theme-btn');
+  if (html.dataset.theme === 'dark') { html.dataset.theme = 'light'; btn.textContent = '☾ dark'; }
+  else { html.dataset.theme = 'dark'; btn.textContent = '☀ light'; }
+}
+// Scrollspy for floating TOC
+(function() {
+  const links = Array.from(document.querySelectorAll('.toc-side a'));
+  const map = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(a => a.classList.remove('active'));
+        const a = map.get(e.target.id);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  ['enhancement','brightness','contrast','histogram','filtering','edges','thresholding','morphology','refs'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) obs.observe(el);
+  });
+})();
+</script>
+</body>
+</html>
